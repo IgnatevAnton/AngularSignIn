@@ -13,12 +13,9 @@ export class SignInFormComponent {
 
   private title = "_SignInFormComponent";
   private authorizationService: IAuthorizeService;
-  public submitted = false;
   public isLoadingUser: Signal<boolean>;
   public isErrorUser: Signal<boolean>;
   private formBuilder = inject(FormBuilder);
-
-
 
   constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) _authorizationService: IAuthorizeService) {
     this.authorizationService = _authorizationService;
