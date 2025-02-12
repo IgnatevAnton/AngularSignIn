@@ -1,0 +1,10 @@
+@let user = user$(); 
+@let isCheck = isCheckUser$();
+@if (user !== null && isCheck === true) {
+  <router-outlet />
+} @else if (isCheck === false) {
+  <p>...Loading</p>
+} @else {
+  <app-sign-in></app-sign-in>
+}
+

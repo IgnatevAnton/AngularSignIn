@@ -1,0 +1,28 @@
+<div class="signIn-page">
+  <section class="signIn-section">
+    <div class="signIn-section__header">
+      <app-logo></app-logo>
+      <div class="signIn-header__title">{{(isRegsitarationForm === false) ? "Авторизация" : "Регистрация"}}</div>
+    </div>
+    <div class="signIn-header__loader">
+      @if (isLoadingUser() === true) {
+      <app-loader-line></app-loader-line>
+      }
+    </div>
+    <div class="signIn-section__form">
+      @if(isRegsitarationForm === false) {
+      <app-sign-in-form></app-sign-in-form>
+      } @else {
+      <app-registration-from></app-registration-from>
+      }
+    </div>
+    <div class="signIn-section__footer">
+      @if(isRegsitarationForm === false) {
+      <p>У вас еще нет учетной записи? <a (click)="changeIsRegistrationForm($event)">Зарегистрируйтесь сейчас</a></p>
+      } @else {
+      <p>У вас уже есть аккаунт? <a (click)="changeIsRegistrationForm($event)">Войти</a></p>
+      }
+    </div>
+  </section>
+</div>
+

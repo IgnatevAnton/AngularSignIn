@@ -1,0 +1,62 @@
+$border-color: rgba(0,0,0,0.1);
+$form-color: rgba(0,0,0,0.3);
+
+.signIn-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .signIn-section {
+    width: 450px;
+    height: max-content;
+
+    &__header {
+      width: 100%;
+      display: flex;
+      align-content: flex-end;
+      align-items: flex-end;
+      padding: 10px 20px;
+      box-sizing: border-box;
+      filter: grayscale(0.8);
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .signIn-header__title {
+        width: 100%;
+        text-align: center;
+        font-size: 17px;
+        font-weight: 450;
+        color: $form-color;
+      }
+    }
+
+
+    .signIn-header__loader {
+      margin: 0px auto;
+      background-color: #ddd;
+      height: 1px;
+    }
+
+    &__form {
+      padding: 10px 20px;
+      box-sizing: border-box;
+    }
+
+    &__footer {
+      padding: 10px 20px;
+      box-sizing: border-box;
+      width: 100%;
+      font-size: 12px;
+      text-align: center;
+
+      a {
+        font-weight: 500;
+        color: #646cff;
+        text-decoration: inherit;
+        cursor: pointer;
+      }
+    }
+  }
+}
