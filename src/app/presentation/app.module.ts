@@ -10,11 +10,11 @@ import { DomainTokens, ILogger } from '@domain';
 import { MainComponent } from '@presentation/pages/main/main.component';
 import { DomainModule } from '@domain/domain.module';
 import { InfrastructureModule } from '@infrastructure/infrastructure.module';
-import { RegistrationFromComponent } from './features/registration-from/registration-from.component';
-import { LogoComponent } from './shared/logo/logo.component';
-import { LoaderLineComponent } from './shared/loaders/loader-line/loader-line.component';
-import { LoaderSpinnerComponent } from './shared/loaders/loader-spinner/loader-spinner.component';
-import { SignInFormComponent } from './features/sign-in-form/components/sign-in-form.component';
+import { LogoComponent } from '@presentation/shared/logo/logo.component';
+import { LoaderLineComponent } from '@presentation/shared/loaders/loader-line/loader-line.component';
+import { LoaderSpinnerComponent } from '@presentation/shared/loaders/loader-spinner/loader-spinner.component';
+import { SignInFormComponent } from '@presentation/features/sign-in-form/components/sign-in-form.component';
+import { RegistrationFromComponent } from '@presentation/features/registration-from/components/registration-from.component';
 
 @NgModule({
   declarations: [
