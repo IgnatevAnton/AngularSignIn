@@ -1,4 +1,4 @@
-import { Component, inject, Inject, Signal } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Inject, Output, Signal } from '@angular/core';
 import { ApplicationTokens, IAuthorizeService } from '@application';
 import { DomainDecoators } from '@domain';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -12,20 +12,28 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class SignInFormComponent {
 
   private title = "_SignInFormComponent";
-  private authorizationService: IAuthorizeService;
+  private _authorizationService: IAuthorizeService;
   public isLoadingUser: Signal<boolean>;
   public isErrorUser: Signal<boolean>;
+  @Output() private changeIsLoadingUser = new EventEmitter<boolean>();
+
   private formBuilder = inject(FormBuilder);
 
-  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) _authorizationService: IAuthorizeService) {
-    this.authorizationService = _authorizationService;
-    this.isLoadingUser = this.authorizationService.isLoadingLogin$;
-    this.isErrorUser = this.authorizationService.isErrorLogin$;
+  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: IAuthorizeService) {
+
+    this._authorizationService = authorizationService;
+    this.isLoadingUser = this._authorizationService.isLoadingLogin$;
+    this.isErrorUser = this._authorizationService.isErrorLogin$;
+
+    effect(() => {
+      this.changeIsLoadingUser.emit(this.isLoadingUser());
+    });
+
   }
 
   public authorizationForm = this.formBuilder.group({
     login: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', [Validators.required, Validators.minLength(8)]]
   });
 
   @DomainDecoators.DebugMethod()
@@ -33,7 +41,7 @@ export class SignInFormComponent {
     const login = this.authorizationForm.value.login;
     const password = this.authorizationForm.value.password;
     if (!(login && password)) { return; }
-    this.authorizationService.login(login, password);
+    this._authorizationService.login(login, password);
   }
 
 }
