@@ -21,8 +21,6 @@ export class AuthorizationServiceHttpClient implements IAuthorizeService {
   get isErrorLogin$(): Signal<boolean> { return this._isErrorLogin$.asReadonly(); }
 
 
-  constructor() { }
-
   @DomainDecoators.DebugMethod()
   check(): void {
     this._repository.check().subscribe({
@@ -44,23 +42,33 @@ export class AuthorizationServiceHttpClient implements IAuthorizeService {
     this._isLoadingLogin$.set(true);
     this._repository.login(username, password).subscribe({
       next: (user) => {
-          this._logger?.info(this._title, "login() ", "next =>", user);
-          this._user$.set(user);
-          this._isLoadingLogin$.set(false);
-          this._isCheck$.set(true);
+        this._logger?.info(this._title, "login() ", "next =>", user);
+        this._user$.set(user);
+        this._isLoadingLogin$.set(false);
+        this._isCheck$.set(true);
       },
       error: (error) => {
-          this._logger?.warning(this._title, error);
-          this._user$.set(null);
-          this._isLoadingLogin$.set(false);
-          this._isErrorLogin$.set(true);
-          setTimeout(() => { this._isErrorLogin$.set(false); }, 2000);
+        this._logger?.warning(this._title, error);
+        this._user$.set(null);
+        this._isLoadingLogin$.set(false);
+        this._isErrorLogin$.set(true);
+        setTimeout(() => { this._isErrorLogin$.set(false); }, 2000);
       }
     })
   }
 
   @DomainDecoators.DebugMethod()
   logout(user: IUser): void {
+  }
+
+  @DomainDecoators.DebugMethod()
+  registration(login: string, password: string, email: string): void {
+
+  }
+
+  @DomainDecoators.DebugMethod()
+  confirmEmail(code: number): void {
+    throw new Error('Method not implemented.');
   }
 
 }

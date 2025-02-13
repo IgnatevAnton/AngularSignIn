@@ -5,5 +5,6 @@ export interface IUser {
   uid: string;
   name: string;
   email: string;
-  role: UserRoles
+  role: UserRoles;
+  isConfirm: boolean;
 }

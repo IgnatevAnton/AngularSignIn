@@ -33,7 +33,7 @@ export class SignInFormComponent {
 
   public authorizationForm = this.formBuilder.group({
     login: ['', Validators.required],
-    password: ['', [Validators.required, Validators.minLength(8)]]
+    password: ['', [Validators.required]]
   });
 
   @DomainDecoators.DebugMethod()

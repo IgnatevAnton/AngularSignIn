@@ -4,21 +4,18 @@ import { Observable } from 'rxjs';
 
 import { IUser, UserRoles, DomainDecoators } from '@domain';
 import { ApplicationTokens, IUserRepository } from '@application';
-import { InfrastructureContainerForDecorator, InfrastructureDecorators, InfrastructureTokens, IUserResponse, IPipelineBehevior } from '@infrastructure';
+import { InfrastructureContainerForDecorator, InfrastructureDecorators, InfrastructureTokens, IPipelineBehevior } from '@infrastructure';
 
 
 export class User implements IUser {
+
   id: number = 0;
   uid: string = "";
   name: string = "";
   email: string = "";
   role: UserRoles = UserRoles.USER;
-}
+  isConfirm: boolean = false;
 
-export class UserResponse implements IUserResponse {
-  email: string = "";
-  uid: string = "";
-  name: string = "";
 }
 
 @Injectable()
