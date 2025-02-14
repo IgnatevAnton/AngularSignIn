@@ -1,4 +1,4 @@
-import { IUserResponse } from '../../interface/IUserResponse';
+import { IUserResponse } from '@infrastructure/interface/IUserResponse';
 
 
 export class UserResponse implements IUserResponse {

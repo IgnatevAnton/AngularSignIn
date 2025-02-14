@@ -1,3 +1,5 @@
+import { DomainInterface } from "@domain";
+
 export interface IRegistrationUser {
-  registration(login: string, password: string, email: string): void;
+  registration(data: DomainInterface.IUserRegistration): void;
 }

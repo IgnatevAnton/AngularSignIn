@@ -11,7 +11,7 @@ export function pipeConveyor(respClass: IPipelineBehevior[]) {
           for (let cls of respClass) {
             const data: any = (beheviorResult?.data !== undefined) ? beheviorResult?.data : value;
             if (data == null) {
-              subscriber.error("Invalid data response");
+              subscriber.error({ message: "Invalid data response", response: value });
               return;
             }
             beheviorResult = cls.set(data);
@@ -19,7 +19,7 @@ export function pipeConveyor(respClass: IPipelineBehevior[]) {
           if (beheviorResult?.data !== undefined) {
             subscriber.next(beheviorResult.data as P);
           } else {
-            subscriber.error("Invalid data response");
+            subscriber.error({ message: "Invalid data response", response: value });
           }
         },
         error(error) { subscriber.error(error); },

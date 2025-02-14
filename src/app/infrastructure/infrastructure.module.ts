@@ -8,8 +8,8 @@ import { ValidateUser } from '@infrastructure/entities/User/ValidateUser';
 
 @NgModule({
   providers: [
-    { provide: InfrastructureTokens.PiplineUserTokens, useClass: ValidateUser, multi: true },
-    { provide: InfrastructureTokens.PiplineUserTokens, useClass: MappingUser, multi: true },
+    { provide: InfrastructureTokens.PipelineUserTokens, useClass: ValidateUser, multi: true },
+    { provide: InfrastructureTokens.PipelineUserTokens, useClass: MappingUser, multi: true },
   ]
 })
 export class InfrastructureModule { }

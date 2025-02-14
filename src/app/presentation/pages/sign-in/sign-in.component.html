@@ -13,7 +13,7 @@
       @if(isRegsitarationForm === false) {
       <app-sign-in-form (changeIsLoadingUser)="isLoadingUser = $event"></app-sign-in-form>
       } @else {
-      <app-registration-from></app-registration-from>
+      <app-registration-from (changeIsLoadingRegistrationUser)="isLoadingUser = $event"></app-registration-from>
       }
     </div>
     <div class="signIn-section__footer">

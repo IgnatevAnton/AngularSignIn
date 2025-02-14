@@ -1,7 +1,9 @@
 import { Inject, isDevMode, NgModule, Optional, Provider } from '@angular/core';
-import { DomainTokens, ILogger } from '@domain';
-import { LocalLoggerService } from './services/local-logger.service';
+import { DomainTokens, DomainServices } from '@domain';
 import { DomainContainerForDecorator } from '@domain/containerForDecorator';
+import { LocalLoggerService } from './services/local-logger.service';
+import { User } from './entities/User';
+import { UserRegistration } from './entities/UserRegistration';
 
 const providersDev: Provider[] = [
   { provide: DomainTokens.LoggerServiceDebugToken, useClass: LocalLoggerService }
@@ -11,11 +13,13 @@ const providersDev: Provider[] = [
   providers: [
     { provide: DomainTokens.LoggerTimeThreshold, useValue: 1000 },
     { provide: DomainTokens.LoggerServiceInfoToken, useClass: LocalLoggerService },
+    { provide: DomainTokens.FactoryUserToken, useValue: () => new User() },
+    { provide: DomainTokens.FactoryUserRegistrationToken, useValue: () => new UserRegistration() },
     ...(isDevMode() ? providersDev : [])
   ]
 })
 export class DomainModule {
-  constructor(@Optional() @Inject(DomainTokens.LoggerServiceDebugToken) loggerDebug?: ILogger | undefined) {
+  constructor(@Optional() @Inject(DomainTokens.LoggerServiceDebugToken) loggerDebug?: DomainServices.ILoggerService | undefined) {
     DomainContainerForDecorator.set(DomainTokens.LoggerServiceDebugToken, loggerDebug);
   }
 }

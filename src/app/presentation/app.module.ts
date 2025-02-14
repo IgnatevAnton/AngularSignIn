@@ -1,12 +1,12 @@
 import { Inject, isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from '@presentation/app-routing.module';
 import { AppComponent } from '@presentation/app.component';
 import { SignInComponent } from '@presentation/pages/sign-in/sign-in.component';
 import { ApplicationModule } from '@application/application.module';
-import { DomainTokens, ILogger } from '@domain';
+import { DomainTokens, DomainInterface, DomainServices } from '@domain';
 import { MainComponent } from '@presentation/pages/main/main.component';
 import { DomainModule } from '@domain/domain.module';
 import { InfrastructureModule } from '@infrastructure/infrastructure.module';
@@ -38,10 +38,10 @@ import { RegistrationFromComponent } from '@presentation/features/registration-f
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  private _loggerInfo: ILogger | undefined;
+  private _loggerInfo: DomainServices.ILoggerService | undefined;
 
   constructor(
-    @Inject(DomainTokens.LoggerServiceInfoToken) loggerInfo?: ILogger
+    @Inject(DomainTokens.LoggerServiceInfoToken) loggerInfo?: DomainServices.ILoggerService
   ) {
     this._loggerInfo = loggerInfo;
     this.getAppInfo();

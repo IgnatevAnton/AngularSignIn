@@ -1,4 +1,4 @@
-import { UserRoles } from "@domain/constant/UserRoles";
+import { UserRoles } from "@domain";
 
 export interface IUser {
   id: number;

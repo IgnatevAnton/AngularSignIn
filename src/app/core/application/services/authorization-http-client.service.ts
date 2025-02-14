@@ -1,5 +1,5 @@
 import { inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
-import { DomainDecoators, DomainTokens, ILogger, IUser } from '@domain';
+import { DomainDecoators, DomainTokens, DomainInterface, DomainServices, RegistrationStatusErrors } from '@domain';
 import { ApplicationTokens, IAuthorizeService, IUserRepository } from '@application';
 
 
@@ -7,18 +7,26 @@ import { ApplicationTokens, IAuthorizeService, IUserRepository } from '@applicat
 export class AuthorizationServiceHttpClient implements IAuthorizeService {
 
   private _title: string = "_AuthorizationServiceHttpClient";
-  private _logger?: ILogger | null = inject(DomainTokens.LoggerServiceDebugToken, { optional: true });
+  private _logger?: DomainServices.ILoggerService | null = inject(DomainTokens.LoggerServiceDebugToken, { optional: true });
   private _repository: IUserRepository = inject(ApplicationTokens.UserRepositoryToken);
 
-  private _user$: WritableSignal<IUser | null> = signal<IUser | null>(null);
+  private _user$: WritableSignal<DomainInterface.IUser | null> = signal<DomainInterface.IUser | null>(null);
   private _isCheck$: WritableSignal<boolean> = signal<boolean>(false);
   private _isLoadingLogin$: WritableSignal<boolean> = signal<boolean>(false);
   private _isErrorLogin$: WritableSignal<boolean> = signal<boolean>(false);
 
-  get user$(): Signal<IUser | null> { return this._user$.asReadonly(); }
+  private _isLoadingRegistration$: WritableSignal<boolean> = signal<boolean>(false);
+  private _isErrorRegistration$: WritableSignal<RegistrationStatusErrors[]> = signal<RegistrationStatusErrors[]>([]);
+
+  get user$(): Signal<DomainInterface.IUser | null> { return this._user$.asReadonly(); }
+
   get isCheck$(): Signal<boolean> { return this._isCheck$.asReadonly(); }
+
   get isLoadingLogin$(): Signal<boolean> { return this._isLoadingLogin$.asReadonly(); }
   get isErrorLogin$(): Signal<boolean> { return this._isErrorLogin$.asReadonly(); }
+
+  get isLoadingRegistration$(): Signal<boolean> { return this._isLoadingRegistration$.asReadonly(); }
+  get isErrorRegistration$(): Signal<RegistrationStatusErrors[]> { return this._isErrorRegistration$.asReadonly(); }
 
 
   @DomainDecoators.DebugMethod()
@@ -58,12 +66,28 @@ export class AuthorizationServiceHttpClient implements IAuthorizeService {
   }
 
   @DomainDecoators.DebugMethod()
-  logout(user: IUser): void {
+  logout(user: DomainInterface.IUser): void {
   }
 
   @DomainDecoators.DebugMethod()
-  registration(login: string, password: string, email: string): void {
-
+  registration(data: DomainInterface.IUserRegistration): void {
+    this._isLoadingRegistration$.set(true);
+    this._repository.registration(data).subscribe({
+      next: (status: DomainInterface.IUserRegistrationStatus) => {
+        this._logger?.info(this._title, "registration() ", "next =>", status);
+        if (status.status) {
+          this.login(data.name, data.password);
+        } else {
+          this._isLoadingRegistration$.set(false);
+          this._isErrorRegistration$.set(status.errorNameFields);
+          setTimeout(() => { this._isErrorRegistration$.set([]); }, 2000);
+        }
+      },
+      error: (error) => {
+        this._logger?.warning(this._title, error);
+        this._isLoadingRegistration$.set(false);
+      }
+    });
   }
 
   @DomainDecoators.DebugMethod()

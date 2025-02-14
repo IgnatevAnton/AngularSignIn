@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, Signal } from '@angular/core';
 import { IAuthorizeService } from '@application/interface/IAuthorizeService';
 import { ApplicationTokens } from '@application';
-import { IUser } from '@domain';
+import { DomainInterface } from '@domain';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ import { IUser } from '@domain';
 export class AppComponent {
 
   public readonly title = '_AppComponent';
-  public readonly user$: Signal<IUser | null>;
+  public readonly user$: Signal<DomainInterface.IUser | null>;
   public readonly isCheckUser$: Signal<boolean>;
   private _authorizeService: IAuthorizeService;
 
