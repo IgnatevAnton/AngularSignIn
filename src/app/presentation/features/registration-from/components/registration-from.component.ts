@@ -1,7 +1,7 @@
 import { Component, effect, EventEmitter, inject, Inject, Output, Signal } from '@angular/core';
-import { ApplicationTokens, IAuthorizeService } from '@application';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DomainDecoators, DomainTokens, DomainInterface, RegistrationStatusErrors } from '@domain';
+import { ApplicationTokens, ApplicationServices } from '@application';
 import { matchValidator } from '../validators/matchValidator';
 
 @Component({
@@ -14,7 +14,7 @@ import { matchValidator } from '../validators/matchValidator';
 export class RegistrationFromComponent {
 
   private _title = "_RegistrationFromComponent";
-  private _authorizationService: IAuthorizeService;
+  private _authorizationService: ApplicationServices.IAuthorizeService;
   private _formBuilder = inject(FormBuilder);
   private _userRegistrationData = inject(DomainTokens.FactoryUserRegistrationToken);
   public isLoadingRegistrationUser$: Signal<boolean>;
@@ -26,7 +26,7 @@ export class RegistrationFromComponent {
 
   @Output() private changeIsLoadingRegistrationUser = new EventEmitter<boolean>();
 
-  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: IAuthorizeService) {
+  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService) {
     this._authorizationService = authorizationService;
     this.isLoadingRegistrationUser$ = this._authorizationService.isLoadingRegistration$;
     effect(() => {

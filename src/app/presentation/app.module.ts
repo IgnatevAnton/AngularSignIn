@@ -2,19 +2,22 @@ import { Inject, isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { DomainModule } from '@domain/domain.module';
+import { ApplicationModule } from '@application/application.module';
+import { InfrastructureModule } from '@infrastructure/infrastructure.module';
+
+import { DomainTokens, DomainServices } from '@domain';
+
 import { AppRoutingModule } from '@presentation/app-routing.module';
 import { AppComponent } from '@presentation/app.component';
 import { SignInComponent } from '@presentation/pages/sign-in/sign-in.component';
-import { ApplicationModule } from '@application/application.module';
-import { DomainTokens, DomainInterface, DomainServices } from '@domain';
 import { MainComponent } from '@presentation/pages/main/main.component';
-import { DomainModule } from '@domain/domain.module';
-import { InfrastructureModule } from '@infrastructure/infrastructure.module';
 import { LogoComponent } from '@presentation/shared/logo/logo.component';
 import { LoaderLineComponent } from '@presentation/shared/loaders/loader-line/loader-line.component';
 import { LoaderSpinnerComponent } from '@presentation/shared/loaders/loader-spinner/loader-spinner.component';
 import { SignInFormComponent } from '@presentation/features/sign-in-form/components/sign-in-form.component';
 import { RegistrationFromComponent } from '@presentation/features/registration-from/components/registration-from.component';
+
 
 @NgModule({
   declarations: [

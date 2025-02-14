@@ -1,7 +1,7 @@
-import { IUserResponse } from '@infrastructure/interface/IUserResponse';
+import { InfrsatructureInterface } from '@infrastructure';
 
 
-export class UserResponse implements IUserResponse {
+export class UserResponse implements InfrsatructureInterface.IUserResponse {
     email: string = "";
     uid: string = "";
     name: string = "";

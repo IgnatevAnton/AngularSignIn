@@ -1,13 +1,13 @@
 import { Observable } from 'rxjs';
-import { IPipelineBehevior } from '@infrastructure/interface/IPipelineBehevior';
+import { InfrsatructureInterface } from '@infrastructure';
 
 
-export function pipeConveyor(respClass: IPipelineBehevior[]) {
+export function pipeConveyor(respClass: InfrsatructureInterface.IPipelineBehevior[]) {
   return function <P>(source: Observable<P>): Observable<P> {
     return new Observable(subscriber => {
       const subscription = source.subscribe({
         next(value) {
-          let beheviorResult: IPipelineBehevior | undefined;
+          let beheviorResult: InfrsatructureInterface.IPipelineBehevior | undefined;
           for (let cls of respClass) {
             const data: any = (beheviorResult?.data !== undefined) ? beheviorResult?.data : value;
             if (data == null) {

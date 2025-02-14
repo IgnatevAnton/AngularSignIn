@@ -1,17 +1,15 @@
-import { IPipelineBehevior } from '@infrastructure/interface/IPipelineBehevior';
-import { IUserResponse } from '@infrastructure/interface/IUserResponse';
-import { InfrastructureContainerForDecorator } from '../../containerForDecorator';
 import { DomainTokens, DomainInterface } from '@domain';
-export class MappingUser implements IPipelineBehevior {
+import { InfrastructureContainerForDecorator, InfrsatructureInterface } from '@infrastructure';
+
+export class MappingUser implements InfrsatructureInterface.IPipelineBehevior {
 
   private _data: any | null = null;
   get data(): any | null { return this._data; }
 
-  set(data: any): IPipelineBehevior {
+  set(data: any): InfrsatructureInterface.IPipelineBehevior {
     this._data = null;
-    const dt = data as IUserResponse;
+    const dt = data as InfrsatructureInterface.IUserResponse;
     const user: DomainInterface.IUser = InfrastructureContainerForDecorator.get(DomainTokens.FactoryUserToken)();
-    console.log('MappingUser', user);
     user.email = dt.email;
     user.name = dt.name;
     user.uid = dt.uid;

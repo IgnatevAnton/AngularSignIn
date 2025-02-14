@@ -1,14 +1,14 @@
 import { inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { DomainDecoators, DomainTokens, DomainInterface, DomainServices, RegistrationStatusErrors } from '@domain';
-import { ApplicationTokens, IAuthorizeService, IUserRepository } from '@application';
+import { ApplicationTokens, ApplicationInterfaces, ApplicationServices } from '@application';
 
 
 @Injectable()
-export class AuthorizationServiceHttpClient implements IAuthorizeService {
+export class AuthorizationServiceHttpClient implements ApplicationServices.IAuthorizeService {
 
   private _title: string = "_AuthorizationServiceHttpClient";
   private _logger?: DomainServices.ILoggerService | null = inject(DomainTokens.LoggerServiceDebugToken, { optional: true });
-  private _repository: IUserRepository = inject(ApplicationTokens.UserRepositoryToken);
+  private _repository: ApplicationInterfaces.IUserRepository = inject(ApplicationTokens.UserRepositoryToken);
 
   private _user$: WritableSignal<DomainInterface.IUser | null> = signal<DomainInterface.IUser | null>(null);
   private _isCheck$: WritableSignal<boolean> = signal<boolean>(false);

@@ -1,7 +1,8 @@
 import { Component, effect, EventEmitter, inject, Inject, Output, Signal } from '@angular/core';
-import { ApplicationTokens, IAuthorizeService } from '@application';
-import { DomainDecoators } from '@domain';
 import { FormBuilder, Validators } from '@angular/forms';
+
+import { DomainDecoators } from '@domain';
+import { ApplicationTokens, ApplicationServices } from '@application';
 
 @Component({
   selector: 'app-sign-in-form',
@@ -12,14 +13,14 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class SignInFormComponent {
 
   private title = "_SignInFormComponent";
-  private _authorizationService: IAuthorizeService;
+  private _authorizationService: ApplicationServices.IAuthorizeService;
   public isLoadingUser: Signal<boolean>;
   public isErrorUser: Signal<boolean>;
   @Output() private changeIsLoadingUser = new EventEmitter<boolean>();
 
   private formBuilder = inject(FormBuilder);
 
-  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: IAuthorizeService) {
+  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService) {
 
     this._authorizationService = authorizationService;
     this.isLoadingUser = this._authorizationService.isLoadingLogin$;
