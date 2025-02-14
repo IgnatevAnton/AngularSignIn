@@ -1,7 +1,7 @@
 import { DomainInterface } from "@domain";
 
 export class UserRegistration implements DomainInterface.IUserRegistration {
-    name: string = "";
+    login: string = "";
     email: string = "";
     password: string = "";
 }

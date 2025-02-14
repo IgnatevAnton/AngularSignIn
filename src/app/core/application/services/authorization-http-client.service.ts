@@ -76,7 +76,7 @@ export class AuthorizationServiceHttpClient implements IAuthorizeService {
       next: (status: DomainInterface.IUserRegistrationStatus) => {
         this._logger?.info(this._title, "registration() ", "next =>", status);
         if (status.status) {
-          this.login(data.name, data.password);
+          this.login(data.login, data.password);
         } else {
           this._isLoadingRegistration$.set(false);
           this._isErrorRegistration$.set(status.errorNameFields);

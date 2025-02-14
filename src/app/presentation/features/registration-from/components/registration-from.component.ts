@@ -52,7 +52,7 @@ export class RegistrationFromComponent {
     const password = this.registrationForm.value.password;
     if (!(login && email && password)) { return; }
     const data: DomainInterface.IUserRegistration = this._userRegistrationData();
-    data.name = login;
+    data.login = login;
     data.email = email;
     data.password = password;
     this._authorizationService.registration(data);
