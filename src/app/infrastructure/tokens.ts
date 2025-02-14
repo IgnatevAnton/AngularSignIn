@@ -1,4 +1,5 @@
 import { InjectionToken } from "@angular/core";
-import { IPipelineBehevior } from "@infrastructure/interface/IPipelineBehevior";
+import { InfrsatructureInterface } from "@infrastructure";
 
-export const PiplineUserTokens = new InjectionToken<IPipelineBehevior>("PiplineUserTokens");
+export const PipelineUserTokens = new InjectionToken<InfrsatructureInterface.IPipelineBehevior>("PiplineUserTokens");
+export const FactoryUserResponseToken = new InjectionToken<InfrsatructureInterface.IUserResponse>("FactoryUserResponseToken");

@@ -1,13 +1,12 @@
-import { pipeConveyor } from '../pipe/pipeConveyor';
-import { IPipelineBehevior } from '../../interface/IPipelineBehevior';
-import { InfrastructureContainerForDecorator } from '../../containerForDecorator';
-import { InfrastructureTokens } from '../..';
+import { InjectionToken } from '@angular/core';
+import { pipeConveyor } from '@infrastructure/common/pipe/pipeConveyor';
+import { InfrastructureContainerForDecorator, InfrsatructureInterface } from '@infrastructure';
 
-export function PiplineObservible() {
+export function PiplineObservible(token: InjectionToken<InfrsatructureInterface.IPipelineBehevior>) {
   return function (target: Object, methodName: string, descriptor: PropertyDescriptor) {
     const method = descriptor.value;
     descriptor.value = function (...arg: any[]) {
-      const respClass: IPipelineBehevior[] = InfrastructureContainerForDecorator.get(InfrastructureTokens.PiplineUserTokens);
+      const respClass: InfrsatructureInterface.IPipelineBehevior[] = InfrastructureContainerForDecorator.get(token);
       return method?.apply(this, arg).pipe(pipeConveyor(respClass));
     };
   };

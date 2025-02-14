@@ -1,25 +1,31 @@
 import { Observable } from 'rxjs';
-import { IPipelineBehevior } from '@infrastructure/interface/IPipelineBehevior';
+import { InfrsatructureInterface } from '@infrastructure';
 
 
-export function pipeConveyor(respClass: IPipelineBehevior[]) {
-    return function <P>(source: Observable<P>): Observable<P> {
-        return new Observable(subscriber => {
-            const subscription = source.subscribe({
-                next(value) {
-                    let beheviorResult: IPipelineBehevior | undefined;
-                    for (let cls of respClass) {
-                        const data: any = (beheviorResult?.data !== undefined) ? beheviorResult?.data : value;
-                        if (data == null) { subscriber.next(null as P); return; }
-                        beheviorResult = cls.set(data);
-                    }
-                    const out = (beheviorResult?.data !== undefined) ? beheviorResult?.data : value;
-                    subscriber.next(out as P);
-                },
-                error(error) { subscriber.error(error); },
-                complete() { subscriber.complete(); }
-            });
-            return () => subscription.unsubscribe();
-        });
-    };
+export function pipeConveyor(respClass: InfrsatructureInterface.IPipelineBehevior[]) {
+  return function <P>(source: Observable<P>): Observable<P> {
+    return new Observable(subscriber => {
+      const subscription = source.subscribe({
+        next(value) {
+          let beheviorResult: InfrsatructureInterface.IPipelineBehevior | undefined;
+          for (let cls of respClass) {
+            const data: any = (beheviorResult?.data !== undefined) ? beheviorResult?.data : value;
+            if (data == null) {
+              subscriber.error({ message: "Invalid data response", response: value });
+              return;
+            }
+            beheviorResult = cls.set(data);
+          }
+          if (beheviorResult?.data !== undefined) {
+            subscriber.next(beheviorResult.data as P);
+          } else {
+            subscriber.error({ message: "Invalid data response", response: value });
+          }
+        },
+        error(error) { subscriber.error(error); },
+        complete() { subscriber.complete(); }
+      });
+      return () => subscription.unsubscribe();
+    });
+  };
 }

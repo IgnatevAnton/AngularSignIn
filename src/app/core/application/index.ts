@@ -1,6 +1,3 @@
-export type { IAuthorizeService } from "@application/interface/IAuthorizeService";
-export type { IUserRepository } from "@application/interface/IUserRepository";
-
-export { AuthorizationServiceHttpClient } from "@application/services/authorization-http-client.service";
-
+export * as ApplicationServices from "@application/services";
+export * as ApplicationInterfaces from "@application/interface";
 export * as ApplicationTokens from "@application/tokens";

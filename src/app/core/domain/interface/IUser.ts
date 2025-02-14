@@ -1,9 +1,10 @@
-import { UserRoles } from "@domain/constant/UserRoles";
+import { UserRoles } from "@domain";
 
 export interface IUser {
   id: number;
   uid: string;
   name: string;
   email: string;
-  role: UserRoles
+  role: UserRoles;
+  isConfirm: boolean;
 }

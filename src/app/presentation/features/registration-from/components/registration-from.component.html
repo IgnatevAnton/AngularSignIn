@@ -1,6 +1,7 @@
-<form class="registration-form">
-  <input class="input" type="text" placeholder="Логин" />
-  <input class="input" type="email" placeholder="Почта" />
-  <input class="input" type="password" placeholder="Пароль" />
-  <input class="input" type="password" placeholder="Пароль повторно" />
+<form class="registration-form" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+  <input class="input" [class.input-invalid]="isErrorEmail" type="email" placeholder="Почта" formControlName="email" name="email" />
+  <input class="input" [class.input-invalid]="isErrorName" type="text" placeholder="Логин" formControlName="login" name="login" />
+  <input class="input" [class.input-invalid]="isErrorPassword" type="password" placeholder="Пароль" formControlName="password" name="password" appSomeAsyncValidator />
+  <input class="input" [class.input-invalid]="isErrorPassword" type="password" placeholder="Подтвердите пароль" formControlName="confirmPassword" name="confirmPassword" appSomeAsyncValidator />
+  <button type="submit" [disabled]="isLoadingRegistrationUser$() || !registrationForm.valid">Зарегистрироваться</button>
 </form>

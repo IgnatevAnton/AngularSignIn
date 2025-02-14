@@ -1,22 +1,21 @@
-import { IPipelineBehevior } from '@infrastructure/interface/IPipelineBehevior';
-import { IUserResponse } from '@infrastructure/interface/IUserResponse';
-import { User } from '@infrastructure/service/user-repository-http.service';
+import { DomainTokens, DomainInterface } from '@domain';
+import { InfrastructureContainerForDecorator, InfrsatructureInterface } from '@infrastructure';
 
+export class MappingUser implements InfrsatructureInterface.IPipelineBehevior {
 
-export class MappingUser implements IPipelineBehevior {
+  private _data: any | null = null;
+  get data(): any | null { return this._data; }
 
-    private _data: any | null = null;
-    get data(): any | null { return this._data; }
-
-    set(data: any): IPipelineBehevior {
-        this._data = null;
-        const dt = data as IUserResponse;
-        const user = new User();
-        user.email = dt.email;
-        user.name = dt.name;
-        user.uid = dt.uid;
-        this._data = user;
-        return this;
-    }
+  set(data: any): InfrsatructureInterface.IPipelineBehevior {
+    this._data = null;
+    const dt = data as InfrsatructureInterface.IUserResponse;
+    const user: DomainInterface.IUser = InfrastructureContainerForDecorator.get(DomainTokens.FactoryUserToken)();
+    user.email = dt.email;
+    user.name = dt.name;
+    user.uid = dt.uid;
+    user.isConfirm = dt.isConfirm;
+    this._data = user;
+    return this;
+  }
 
 }

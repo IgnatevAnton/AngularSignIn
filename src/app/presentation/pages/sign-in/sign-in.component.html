@@ -5,15 +5,15 @@
       <div class="signIn-header__title">{{(isRegsitarationForm === false) ? "Авторизация" : "Регистрация"}}</div>
     </div>
     <div class="signIn-header__loader">
-      @if (isLoadingUser() === true) {
+      @if (isLoadingUser === true) {
       <app-loader-line></app-loader-line>
       }
     </div>
     <div class="signIn-section__form">
       @if(isRegsitarationForm === false) {
-      <app-sign-in-form></app-sign-in-form>
+      <app-sign-in-form (changeIsLoadingUser)="isLoadingUser = $event"></app-sign-in-form>
       } @else {
-      <app-registration-from></app-registration-from>
+      <app-registration-from (changeIsLoadingRegistrationUser)="isLoadingUser = $event"></app-registration-from>
       }
     </div>
     <div class="signIn-section__footer">

@@ -1,9 +1,8 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { ILogger } from '@domain/interface/ILogger';
-import { DomainTokens } from '..';
+import { DomainTokens, DomainServices } from '..';
 
 @Injectable()
-export class LocalLoggerService implements ILogger {
+export class LocalLoggerService implements DomainServices.ILoggerService {
   private _timeThreshold: number = 30000;
 
   constructor(@Optional() @Inject(DomainTokens.LoggerTimeThreshold) timeThreshold?: number | undefined) {

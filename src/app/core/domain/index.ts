@@ -1,11 +1,9 @@
-export type { IUser } from "@domain/interface/IUser"
-export type { ILogin } from "@domain/cases/authorization/ILogin";
-export type { ILogout } from "@domain/cases/authorization/ILogout";
-export type { ICheckUser } from "@domain/cases/authorization/ICheckUser";
 export { UserRoles } from "@domain/constant/UserRoles";
+export { RegistrationStatusErrors } from "@domain/constant/RegistrationStatusErrors";
 
-export type { ILogger } from "@domain/interface/ILogger";
-
+export * as DomainServices from "@domain/services";
+export * as DomainInterface from "@domain/interface";
+export * as DomainInstruction from "@domain/cases";
 export * as DomainTokens from "@domain/tokens";
 export * as DomainDecoators from "@domain/decorators";
 export { DomainContainerForDecorator } from "@domain/containerForDecorator";
