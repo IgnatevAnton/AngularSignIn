@@ -17,6 +17,7 @@ import { LoaderLineComponent } from '@presentation/shared/loaders/loader-line/lo
 import { LoaderSpinnerComponent } from '@presentation/shared/loaders/loader-spinner/loader-spinner.component';
 import { SignInFormComponent } from '@presentation/features/sign-in-form/components/sign-in-form.component';
 import { RegistrationFromComponent } from '@presentation/features/registration-from/components/registration-from.component';
+import { VerificationFormComponent } from './features/verification-form/verification-form.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { RegistrationFromComponent } from '@presentation/features/registration-f
     RegistrationFromComponent,
     LogoComponent,
     LoaderLineComponent,
-    LoaderSpinnerComponent
+    LoaderSpinnerComponent,
+    VerificationFormComponent
   ],
   imports: [
     BrowserModule,
