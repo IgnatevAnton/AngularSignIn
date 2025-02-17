@@ -7,7 +7,6 @@ import { matchValidator } from '../validators/matchValidator';
 @Component({
   selector: 'app-registration-from',
   standalone: false,
-
   templateUrl: './registration-from.component.html',
   styleUrl: './registration-from.component.scss'
 })
@@ -18,6 +17,7 @@ export class RegistrationFromComponent {
   private _formBuilder = inject(FormBuilder);
   private _userRegistrationData = inject(DomainTokens.FactoryUserRegistrationToken);
   public isLoadingRegistrationUser$: Signal<boolean>;
+  private _isExitRegistrationForm: boolean = false;
 
   public isErrorName: boolean = false;
   public isErrorEmail: boolean = false;
@@ -25,16 +25,35 @@ export class RegistrationFromComponent {
 
 
   @Output() private changeIsLoadingRegistrationUser = new EventEmitter<boolean>();
+  @Output() private changeIsRegistrationForm = new EventEmitter<boolean>();
 
-  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService) {
+  constructor(
+    @Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService
+  ) {
     this._authorizationService = authorizationService;
     this.isLoadingRegistrationUser$ = this._authorizationService.isLoadingRegistration$;
+
     effect(() => {
-      this.changeIsLoadingRegistrationUser.emit(this.isLoadingRegistrationUser$());
-      this.isErrorName = (this._authorizationService.isErrorRegistration$()).includes(RegistrationStatusErrors.USER_NAME);
-      this.isErrorEmail = (this._authorizationService.isErrorRegistration$()).includes(RegistrationStatusErrors.EMAIL);
-      this.isErrorPassword = (this._authorizationService.isErrorRegistration$()).includes(RegistrationStatusErrors.PASSWORD);
-    })
+      const isLoad = this.isLoadingRegistrationUser$();
+      const isErrorRegistration = this._authorizationService.isErrorRegistration$();
+
+      this.isErrorName = (isErrorRegistration).includes(RegistrationStatusErrors.USER_NAME);
+      this.isErrorEmail = (isErrorRegistration).includes(RegistrationStatusErrors.EMAIL);
+      this.isErrorPassword = (isErrorRegistration).includes(RegistrationStatusErrors.PASSWORD);
+
+      this.changeIsLoadingRegistrationUser.emit(isLoad);
+      if (isLoad) {
+        this._isExitRegistrationForm = true;
+      } else {
+        this.registrationForm.enable();
+        if (this._isExitRegistrationForm && !this.isErrorName && !this.isErrorEmail && !this.isErrorPassword) {
+          this.changeIsRegistrationForm.emit(false);
+        } else {
+          this._isExitRegistrationForm = false;
+        }
+      }
+    });
+
   }
 
   public registrationForm = this._formBuilder.group({
@@ -51,6 +70,7 @@ export class RegistrationFromComponent {
     const email = this.registrationForm.value.email;
     const password = this.registrationForm.value.password;
     if (!(login && email && password)) { return; }
+    this.registrationForm.disable();
     const data: DomainInterface.IUserRegistration = this._userRegistrationData();
     data.login = login;
     data.email = email;

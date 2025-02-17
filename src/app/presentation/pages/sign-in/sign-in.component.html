@@ -2,7 +2,7 @@
   <section class="signIn-section">
     <div class="signIn-section__header">
       <app-logo></app-logo>
-      <div class="signIn-header__title">{{(isRegsitarationForm === false) ? "Авторизация" : "Регистрация"}}</div>
+      <div class="signIn-header__title">{{(isRegsitarationForm === false) ? (isConfirm === null) ? "Авторизация" : "Завершение регистрации" : "Регистрация"}}</div>
     </div>
     <div class="signIn-header__loader">
       @if (isLoadingUser === true) {
@@ -10,10 +10,12 @@
       }
     </div>
     <div class="signIn-section__form">
-      @if(isRegsitarationForm === false) {
+      @if(isRegsitarationForm === true) {
+      <app-registration-from (changeIsLoadingRegistrationUser)="isLoadingUser = $event" (changeIsRegistrationForm)="isRegsitarationForm = $event"></app-registration-from>
+      } @else if (isConfirm === null) {
       <app-sign-in-form (changeIsLoadingUser)="isLoadingUser = $event"></app-sign-in-form>
       } @else {
-      <app-registration-from (changeIsLoadingRegistrationUser)="isLoadingUser = $event"></app-registration-from>
+      <app-verification-form (changeIsLoadingVerificationUser)="isLoadingUser = $event" [email]="email ?? '' "></app-verification-form>
       }
     </div>
     <div class="signIn-section__footer">

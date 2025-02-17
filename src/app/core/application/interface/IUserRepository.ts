@@ -6,4 +6,5 @@ export interface IUserRepository {
   login(username: string, password: string): Observable<DomainInterface.IUser | null>,
   logout(user: DomainInterface.IUser): void,
   registration(data: DomainInterface.IUserRegistration): Observable<any>,
+  confirm(code: string): Observable<boolean>
 }
