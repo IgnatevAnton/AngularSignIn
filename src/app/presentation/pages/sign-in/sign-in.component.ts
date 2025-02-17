@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,6 +10,8 @@ export class SignInComponent {
 
   public isRegsitarationForm: boolean = false;
   public isLoadingUser!: boolean;
+  @Input() public isConfirm: boolean | null = null;
+  @Input() public email: string | null = null;
 
   changeIsRegistrationForm(event: Event) {
     event.preventDefault();

@@ -15,15 +15,17 @@ export class UserRepositoryHttpService implements ApplicationInterfaces.IUserRep
 
   constructor(
     @Inject(InfrastructureTokens.PipelineUserTokens) userPipline: InfrsatructureInterface.IPipelineBehevior[],
-    @Inject(DomainTokens.FactoryUserToken) factoryUser: DomainInterface.IUser,
-    @Inject(InfrastructureTokens.FactoryUserResponseToken) factoryUserResponse: InfrsatructureInterface.IUserResponse,
+    @Inject(DomainTokens.FactoryUserToken) factoryUser: () => DomainInterface.IUser,
+    @Inject(InfrastructureTokens.FactoryUserResponseToken) factoryUserResponse: () => InfrsatructureInterface.IUserResponse,
   ) {
-    const conatianer = [];
-
-    for (const behevior of userPipline) { conatianer.push(behevior); }
-    InfrastructureContainerForDecorator.set(InfrastructureTokens.PipelineUserTokens, conatianer);
+    
     InfrastructureContainerForDecorator.set(DomainTokens.FactoryUserToken, factoryUser);
     InfrastructureContainerForDecorator.set(InfrastructureTokens.FactoryUserResponseToken, factoryUserResponse);
+
+    const conatianer = [];
+    for (const behevior of userPipline) { conatianer.push(behevior); }
+    InfrastructureContainerForDecorator.set(InfrastructureTokens.PipelineUserTokens, conatianer);
+
   }
 
 
@@ -56,6 +58,15 @@ export class UserRepositoryHttpService implements ApplicationInterfaces.IUserRep
     return this._client.post<DomainInterface.IUserRegistrationStatus>(
       this._url + "api/user/registration",
       data,
+      { responseType: 'json', withCredentials: true }
+    );
+  }
+
+  @DomainDecoators.DebugMethod()
+  confirm(code: string): Observable<boolean> {
+    return this._client.post<boolean>(
+      this._url + "api/user/confirm",
+      { code: code },
       { responseType: 'json', withCredentials: true }
     );
   }

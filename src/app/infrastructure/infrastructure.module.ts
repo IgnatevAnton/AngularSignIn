@@ -7,7 +7,7 @@ import { UserResponse } from '@infrastructure/entities/User/UserResponse';
 
 @NgModule({
   providers: [
-    { provide: InfrastructureTokens.FactoryUserResponseToken, useFactory: () => new UserResponse() },
+    { provide: InfrastructureTokens.FactoryUserResponseToken, useValue: () => new UserResponse() },
     { provide: InfrastructureTokens.PipelineUserTokens, useClass: ValidateUser, multi: true },
     { provide: InfrastructureTokens.PipelineUserTokens, useClass: MappingUser, multi: true },
   ]

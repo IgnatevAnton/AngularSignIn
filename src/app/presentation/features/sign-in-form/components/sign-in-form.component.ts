@@ -27,7 +27,11 @@ export class SignInFormComponent {
     this.isErrorUser = this._authorizationService.isErrorLogin$;
 
     effect(() => {
-      this.changeIsLoadingUser.emit(this.isLoadingUser());
+      const isLoadingUser = this.isLoadingUser();
+      this.changeIsLoadingUser.emit(isLoadingUser);
+      if (!isLoadingUser) {
+        this.authorizationForm.enable();
+      }
     });
 
   }
@@ -42,6 +46,7 @@ export class SignInFormComponent {
     const login = this.authorizationForm.value.login;
     const password = this.authorizationForm.value.password;
     if (!(login && password)) { return; }
+    this.authorizationForm.disable();
     this._authorizationService.login(login, password);
   }
 
