@@ -9,7 +9,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app\infrastructure\service\interface\" />
-    <Folder Include="src\app\presentation\pages\" />
     <Folder Include="src\app\presentation\shared\loaders\" />
   </ItemGroup>
 </Project>
