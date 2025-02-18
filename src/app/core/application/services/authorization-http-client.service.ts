@@ -65,14 +65,12 @@ export class AuthorizationServiceHttpClient implements ApplicationServices.IAuth
       next: (user) => {
         this._logger?.info(this._title, "login() ", "next =>", user);
         this._user$.set(user);
-        this._isCheck$.set(true);
         this._isLoadingLogin$.set(false);
         this._isErrorLogin$.set(false);
       },
       error: (error) => {
         this._logger?.warning(this._title, error);
         this._user$.set(null);
-        this._isCheck$.set(false);
         this._isLoadingLogin$.set(false);
         this._isErrorLogin$.set(true);
         setTimeout(() => { this._isErrorLogin$.set(false); }, this._timeoutMillisecondCleanError);
