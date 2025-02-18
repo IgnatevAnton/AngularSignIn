@@ -7,6 +7,6 @@
     </p>
   </div>
   <input class="input" [class.input-invalid]="isErrorVerificationUser$()" type="text" placeholder="Код подтверждения" formControlName="code" name="code" />
-  <button type="submit">Подтвердить</button>
-  <button type="button" (click)="onSendCode()" [disabled]="(isTimeoutRepeatSendCode$() > 0)">Отправить код {{isTimeoutRepeatSendCode$() > 0 ? "("+isTimeoutRepeatSendCode$()+")" : "" }}</button>
+  <button class="button" type="submit">Подтвердить</button>
+  <button class="button" type="button" (click)="onSendCode()" [disabled]="(isTimeoutRepeatSendCode$() > 0)">Отправить код {{isTimeoutRepeatSendCode$() > 0 ? "("+isTimeoutRepeatSendCode$()+")" : "" }}</button>
 </form>
