@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 
 import { DomainDecoators, DomainInterface, DomainTokens } from '@domain';
 import { ApplicationTokens, ApplicationInterfaces } from '@application';
@@ -49,8 +49,8 @@ export class UserRepositoryHttpService implements ApplicationInterfaces.IUserRep
   }
 
   @DomainDecoators.DebugMethod()
-  logout(user: DomainInterface.IUser): void {
-    throw new Error('Method not implemented.');
+  logout(): void {
+    this._client.get(this._url + "api/user/logout", { responseType: 'json', withCredentials: true }).pipe(take(1)).subscribe();
   }
 
   @DomainDecoators.DebugMethod()

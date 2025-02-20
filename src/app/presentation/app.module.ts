@@ -1,44 +1,26 @@
 import { Inject, isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
-
+import { AppRoutingModule } from '@presentation/app-routing.module';
+import { AppComponent } from '@presentation/app.component';
+import { DomainTokens, DomainServices } from '@domain';
 import { DomainModule } from '@domain/domain.module';
 import { ApplicationModule } from '@application/application.module';
 import { InfrastructureModule } from '@infrastructure/infrastructure.module';
-
-import { DomainTokens, DomainServices } from '@domain';
-
-import { AppRoutingModule } from '@presentation/app-routing.module';
-import { AppComponent } from '@presentation/app.component';
-import { SignInComponent } from '@presentation/pages/sign-in/sign-in.component';
-import { MainComponent } from '@presentation/pages/main/main.component';
-import { LogoComponent } from '@presentation/shared/logo/logo.component';
-import { LoaderLineComponent } from '@presentation/shared/loaders/loader-line/loader-line.component';
-import { LoaderSpinnerComponent } from '@presentation/shared/loaders/loader-spinner/loader-spinner.component';
-import { SignInFormComponent } from '@presentation/features/sign-in-form/components/sign-in-form.component';
-import { RegistrationFromComponent } from '@presentation/features/registration-from/components/registration-from.component';
-import { VerificationFormComponent } from '@presentation/features/verification-form/components/verification-form.component';
-
+import { SignInModule } from '@presentation/pages/sign-in/sign-in.module';
+import { MainModule } from '@presentation/pages/main/main.module';
+import { LoaderSpinnerComponent } from '@presentation/shared/components/loaders/loader-spinner/loader-spinner.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SignInComponent,
-    MainComponent,
-    SignInFormComponent,
-    RegistrationFromComponent,
-    LogoComponent,
-    LoaderLineComponent,
-    LoaderSpinnerComponent,
-    VerificationFormComponent
-  ],
+  declarations: [ AppComponent ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
     DomainModule,
     ApplicationModule,
-    InfrastructureModule
+    InfrastructureModule,
+    SignInModule,
+    MainModule,
+    LoaderSpinnerComponent
   ],
   bootstrap: [AppComponent]
 })

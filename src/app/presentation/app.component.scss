@@ -1,0 +1,14 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.app__loader {
+  margin: auto auto;
+  color: #ddd;
+  width: 100px;
+  height: 100px;
+}

@@ -1,0 +1,55 @@
+.user-profile__user-icon {
+  width: 150px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0px 5px;
+
+  .user-icon__icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0.5px 0.5px 2px #0c0c0c;
+    background-color: white;
+
+
+    img {
+      width: 16px;
+      height: 16px;
+      filter: contrast(0.01);
+    }
+  }
+
+  hr {
+    width: 1px;
+    height: 20px;
+    border-color: rgba(111, 111, 111, 0.1);
+    margin: 5px;
+  }
+
+  .user-icon__info {
+    width: 100px;
+    height: 35px;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 11px;
+    align-items: center;
+    justify-content: flex-end;
+    align-content: center;
+    font-weight: 450;
+    color: rgba(0, 0, 0, 0.5);
+    padding: 0px 2px 0px 5px;
+
+    div, a {
+      width: 100%;
+      overflow: hidden;
+      text-align: left;
+      white-space: nowrap;
+    }
+  }
+}

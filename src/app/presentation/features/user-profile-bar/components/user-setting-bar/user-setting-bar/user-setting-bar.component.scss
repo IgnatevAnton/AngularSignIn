@@ -1,0 +1,22 @@
+.user-profile__setting-bar {
+  width: max-content;
+  height: 40px;
+  padding: 5px 0px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+
+  hr {
+    width: 1px;
+    height: 20px;
+    border-color: rgba(111, 111, 111, 0.1);
+    margin: 5px;
+  }
+
+  .setting-bar__user_icon {
+    width: 20px;
+    height: 20px;
+    filter: contrast(0.01);
+  }
+}
