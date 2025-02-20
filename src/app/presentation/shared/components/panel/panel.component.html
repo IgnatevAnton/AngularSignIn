@@ -1,0 +1,20 @@
+@if (setting && setting.isVisible === true || setting && setting.isClosed === false) {
+<section class="panel-wrapper {{(setting.type === 'HORIZONTAL') ? 'panel-wrapper--horizontal' : 'panel-wrapper--vertical'}}"
+         appDragAndDrop
+         [isStartDrag]="isStartDrag"
+         (handleDrop)="onEndDrop($event)"
+         [x]="setting.position.x"
+         [y]="setting.position.y"
+         [style.width.px]="setting.size.width"
+         [style.height.px]="setting.size.height">
+    <div class="panel-wrapper__action {{(setting.type === 'HORIZONTAL') ? 'panel-wrapper__action--horizontal' : 'panel-wrapper__action--vertical'}}">
+        <div class="panel-wrapper__transfer " (mousedown)="onStartDrag()"></div>
+        @if (setting && setting.isClosed === true) {
+        <div class="panel-wrapper__close {{(setting.type === 'HORIZONTAL') ? 'panel-wrapper__close--horizontal' : 'panel-wrapper__close--vertical'}}">
+            <img src="./assets/close.svg" (click)="onClose()" />
+        </div>
+        }
+    </div>
+    <ng-content></ng-content>
+</section>
+}

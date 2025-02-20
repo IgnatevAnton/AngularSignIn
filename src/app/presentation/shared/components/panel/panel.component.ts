@@ -3,14 +3,16 @@ import { DomainDecoators } from '@domain';
 import { ApplicationInterfaces, ApplicationServices, ApplicationTokens, BarNames } from '@application';
 import { DragAndDropDirective } from '@presentation/shared/directives/drag-and-drop.directive';
 
+
+
 @Component({
-  selector: 'app-horizont-panel',
+  selector: 'app-panel',
   standalone: true,
-  templateUrl: './horizont-panel.component.html',
-  styleUrl: './horizont-panel.component.scss',
+  templateUrl: './panel.component.html',
+  styleUrl: './panel.component.scss',
   imports: [DragAndDropDirective]
 })
-export class HorizontPanelComponent {
+export class PanelComponent {
 
   @Input() public name!: BarNames;
   private _settingInterfaceService: ApplicationServices.ISettingInterfaceService;

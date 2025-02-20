@@ -8,6 +8,7 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\AngularSignIn\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\app\presentation\shared\components\panels\" />
     <Folder Include="src\app\presentation\shared\directives\" />
     <Folder Include="src\app\presentation\common\" />
     <Folder Include="src\app\presentation\shared\components\loaders\" />

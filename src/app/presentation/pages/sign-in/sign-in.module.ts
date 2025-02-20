@@ -6,7 +6,7 @@ import { SignInFormComponent } from '@presentation/features/sign-in-form/compone
 import { RegistrationFromComponent } from '@presentation/features/registration-from/components/registration-from.component';
 import { VerificationFormComponent } from '@presentation/features/verification-form/components/verification-form.component';
 import { LogoComponent } from '@presentation/shared/components/logo/logo.component';
-import { LoaderLineComponent } from '../../shared/components/loaders/loader-line/loader-line.component';
+import { LoaderLineComponent } from '@presentation/shared/components/loaders/loader-line/loader-line.component';
 
 
 @NgModule({

@@ -30,7 +30,7 @@ export class UserRepositoryHttpService implements ApplicationInterfaces.IUserRep
 
 
   @DomainDecoators.DebugMethod()
-  @InfrastructureDecorators.PiplineObservible(InfrastructureTokens.PipelineUserTokens)
+  @InfrastructureDecorators.PipelineObservible(InfrastructureTokens.PipelineUserTokens)
   check(): Observable<DomainInterface.IUser | null> {
     return this._client.get<DomainInterface.IUser>(
       this._url + "api/user/check",
@@ -39,7 +39,7 @@ export class UserRepositoryHttpService implements ApplicationInterfaces.IUserRep
   }
 
   @DomainDecoators.DebugMethod()
-  @InfrastructureDecorators.PiplineObservible(InfrastructureTokens.PipelineUserTokens)
+  @InfrastructureDecorators.PipelineObservible(InfrastructureTokens.PipelineUserTokens)
   login(username: string, password: string): Observable<DomainInterface.IUser> {
     return this._client.post<DomainInterface.IUser>(
       this._url + "api/user/login",

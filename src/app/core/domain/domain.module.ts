@@ -1,6 +1,6 @@
 import { Inject, isDevMode, NgModule, Optional, Provider } from '@angular/core';
 import { DomainTokens, DomainServices } from '@domain';
-import { DomainContainerForDecorator } from '@domain/containerForDecorator';
+import { DomainContainerForDecorator } from './containerForDecorator';
 import { LocalLoggerService } from './services/local-logger.service';
 import { User } from './entities/User';
 import { UserRegistration } from './entities/UserRegistration';

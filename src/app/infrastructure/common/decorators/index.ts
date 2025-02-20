@@ -1,1 +1,1 @@
-export { PiplineObservible } from '@infrastructure/common/decorators/PiplineObservible';
+export { PipelineObservible } from '@infrastructure/common/decorators/PipelineObservible';

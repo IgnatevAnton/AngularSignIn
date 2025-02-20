@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { DomainTokens, DomainServices } from '..';
+import { DomainTokens, DomainServices } from '@domain';
 
 @Injectable()
 export class LocalLoggerService implements DomainServices.ILoggerService {

@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter, Input, Output, Renderer2 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
+import { BarTypes } from '@application';
 
 @Directive({
   selector: '[appDragAndDrop]',
@@ -7,6 +8,7 @@ import { fromEvent, Subscription } from 'rxjs';
 })
 export class DragAndDropDirective {
 
+  @Input() public type!: BarTypes;
   @Input() public isStartDrag!: boolean;
   @Output() public handleDrop = new EventEmitter();
 

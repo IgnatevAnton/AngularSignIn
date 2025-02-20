@@ -1,4 +1,4 @@
-.horizont-panel-wrapper {
+.panel-wrapper {
   background-color: #f9f9f9;
   border-radius: 5px;
   box-shadow: 1px 1px 3px rgba(148, 148, 148, 0.5);
@@ -6,33 +6,63 @@
   top: 5px;
   right: 5px;
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
   padding: 2px;
-  padding-left: 15px;
-  padding-right: 5px;
   user-select: none;
 
+  &--horizontal {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 5px;
+  }
+
+  &--vertical {
+    flex-wrap: wrap;
+    padding-top: 15px;
+  }
+
   &__action {
-    width: 10px;
-    height: calc(100% - 10px);
-    margin-left: -12px;
     position: relative;
+
+    &--horizontal {
+      width: 10px;
+      height: calc(100% - 10px);
+      margin-left: -12px;
+    }
+
+    &--vertical {
+      height: 10px;
+      width: calc(100% - 10px);
+      margin-top: -12px;
+    }
   }
 
   &__close {
     background-color: #f9f9f9;
-    width: 10px;
-    height: 14px;
     display: flex;
     position: absolute;
-    top: -4px;
-    left: 0px;
+    align-items: center;
+
+    &--horizontal {
+      justify-content: center;
+      width: 10px;
+      height: 14px;
+      top: -4px;
+      left: 0px;
+    }
+
+    &--vertical {
+      justify-content: flex-end;
+      width: 14px;
+      height: 10px;
+      top: 0px;
+      right: -8px;
+    }
 
     img {
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       opacity: 0.3;
       cursor: pointer;
       transition: opacity 0.25s;
