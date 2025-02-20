@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DomainInterface } from '@domain';
 
 @Component({
   selector: 'app-user-icon',
@@ -8,5 +9,11 @@ import { Component } from '@angular/core';
   styleUrl: './user-icon.component.scss'
 })
 export class UserIconComponent {
+  @Input() public user!: DomainInterface.IUser | null;
+  @Output() public handleOpenUserProfile = new EventEmitter<void>();
+
+  public onOpenUserProfile(): void {
+    this.handleOpenUserProfile.emit();
+  }
 
 }

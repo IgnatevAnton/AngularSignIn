@@ -1,6 +1,5 @@
-<section class="user-profile-bar-wrapper">
-  <div class="user-profile-bar-wrapper__transfer"></div>
-  <app-user-icon></app-user-icon>
-  <app-user-followers-icon></app-user-followers-icon>
-  <app-user-setting-bar></app-user-setting-bar>
-</section>
+<app-horizont-panel [name]="name">
+    <app-user-icon [user]="user$()" (handleOpenUserProfile)="openUserProfile()"></app-user-icon>
+    <app-user-followers-icon (handleOpenFollowers)="openFollowers()"></app-user-followers-icon>
+    <app-user-setting-bar (handleLogout)="logout()"></app-user-setting-bar>
+</app-horizont-panel>

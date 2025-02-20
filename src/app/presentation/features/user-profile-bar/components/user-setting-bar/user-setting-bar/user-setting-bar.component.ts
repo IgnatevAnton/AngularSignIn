@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-user-setting-bar',
@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './user-setting-bar.component.scss'
 })
 export class UserSettingBarComponent {
+  @Output() private handleLogout = new EventEmitter<void>();
 
+  emitLogout() {
+    this.handleLogout.emit();
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-user-followers-icon',
@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './user-followers-icon.component.scss'
 })
 export class UserFollowersIconComponent {
+  @Output() public handleOpenFollowers = new EventEmitter<void>();
 
+  public onOpenFollowers(): void {
+    this.handleOpenFollowers.emit();
+  }
 }

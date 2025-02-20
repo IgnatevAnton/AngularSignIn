@@ -1,7 +1,8 @@
 import { inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
+import { interval, take } from 'rxjs';
 import { DomainDecoators, DomainTokens, DomainInterface, DomainServices, RegistrationStatusErrors } from '@domain';
 import { ApplicationTokens, ApplicationInterfaces, ApplicationServices } from '@application';
-import { interval, take } from 'rxjs';
+
 
 
 @Injectable()
@@ -79,7 +80,9 @@ export class AuthorizationServiceHttpClient implements ApplicationServices.IAuth
   }
 
   @DomainDecoators.DebugMethod()
-  logout(user: DomainInterface.IUser): void {
+  logout(): void {
+    this._user$.set(null);
+    this._repository.logout();
   }
 
   @DomainDecoators.DebugMethod()

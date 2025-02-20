@@ -8,7 +8,7 @@ import { ApplicationModule } from '@application/application.module';
 import { InfrastructureModule } from '@infrastructure/infrastructure.module';
 import { SignInModule } from '@presentation/pages/sign-in/sign-in.module';
 import { MainModule } from '@presentation/pages/main/main.module';
-import { LoaderSpinnerComponent } from '@presentation/shared/loaders/loader-spinner/loader-spinner.component';
+import { LoaderSpinnerComponent } from '@presentation/shared/components/loaders/loader-spinner/loader-spinner.component';
 
 @NgModule({
   declarations: [ AppComponent ],
