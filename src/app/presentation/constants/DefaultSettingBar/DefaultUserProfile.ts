@@ -1,11 +1,14 @@
 import { ApplicationInterfaces, BarNames, BarTypes } from "@application";
 
+const width = 415;
 export const DefaultUserProfile: ApplicationInterfaces.ISettingBar = {
   name: BarNames.USER_PROFILE,
   type: BarTypes.VERTICAL,
   title: "Информация о пользователе",
-  position: { x: -10, y: 50 },
-  size: { width: 415, height: 300 },
+  position: { x: window.innerWidth - width - 10, y: 55 },
+  size: { width: width, height: 250 },
   isVisible: true,
-  isClosed: true
+  isClosed: true,
+  isResizable: true,
+  isDraggable: true
 } 

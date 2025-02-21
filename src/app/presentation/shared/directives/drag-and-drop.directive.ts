@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, Output, Renderer2 } from '@angular/core';
-import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime, fromEvent, Subscription } from 'rxjs';
 import { BarTypes } from '@application';
 
 @Directive({
@@ -14,14 +14,19 @@ export class DragAndDropDirective {
 
   @Input() public x!: number;
   @Input() public y!: number;
+  @Input() public width!: number;
+  @Input() public height!: number;
 
   private offsetX?: number;
   private offsetY?: number;
 
   private _subscriptionMove?: Subscription;
   private _subscriptionUp?: Subscription;
+  private _subscriptionResize?: Subscription;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) { }
+  constructor(private el: ElementRef, private renderer: Renderer2) {
+    this._subscriptionResize = fromEvent(window, 'resize').subscribe(() => this.setStylePosition(this.y, this.x));
+  }
 
   ngOnChanges() {
     this.setStylePosition(this.y, this.x);
@@ -35,19 +40,22 @@ export class DragAndDropDirective {
 
   ngOnDestroy() {
     this.unsubscribe();
+    this._subscriptionResize?.unsubscribe();
   }
 
-  private setStylePosition(top: number, right: number) {
-    this.renderer.setStyle(this.el.nativeElement, 'right', right * -1 + 'px');
-    this.renderer.setStyle(this.el.nativeElement, 'top', top + 'px');
+  private setStylePosition(top: number, left: number) {
+    const maxTop = window.innerHeight - this.height - 2;
+    const maxLeft = window.innerWidth - this.width - 2;
+    this.renderer.setStyle(this.el.nativeElement, 'left', (left > maxLeft ? maxLeft : (left < 2) ? 2 : left) + 'px');
+    this.renderer.setStyle(this.el.nativeElement, 'top', (top > maxTop ? maxTop: (top < 2) ? 2 : top) + 'px');
   }
 
   private nextMouseMove(e: MouseEvent) {
     if (this.offsetX === undefined) { this.offsetX = e.clientX }
     if (this.offsetY === undefined) { this.offsetY = e.clientY }
     const top = (e.clientY - this.offsetY + this.y);
-    const right = (e.clientX - this.offsetX + this.x);
-    this.setStylePosition(top, right);
+    const left = (e.clientX - this.offsetX + this.x);
+    this.setStylePosition(top, left);
   }
 
   private nextMouseUp(e: MouseEvent) {

@@ -45,4 +45,12 @@ export class UserProfileBarComponent {
     this._settingInterfaceService.setSettingBar(BarNames.FOLLOWERS_BAR, followers);
   }
 
+  @DomainDecoators.DebugMethod()
+  openSettingBars() {
+    const settingBars = this._settingInterfaceService.settings().get(BarNames.SETTING_LIST_BARS);
+    if (settingBars === undefined) { return; }
+    settingBars.isVisible = !settingBars.isVisible;
+    this._settingInterfaceService.setSettingBar(BarNames.SETTING_LIST_BARS, settingBars);
+  }
+
 }

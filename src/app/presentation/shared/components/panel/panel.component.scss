@@ -1,6 +1,6 @@
 .panel-wrapper {
   background-color: #f9f9f9;
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 1px 1px 3px rgba(148, 148, 148, 0.5);
   position: absolute;
   top: 5px;
@@ -8,13 +8,17 @@
   display: flex;
   padding: 2px;
   user-select: none;
+  overflow: hidden;
 
   &--horizontal {
+    min-width: 30px;
+    min-height: max-content;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
     padding-left: 15px;
     padding-right: 5px;
+    overflow-x: auto;
   }
 
   &--vertical {
@@ -23,18 +27,19 @@
   }
 
   &__action {
-    position: relative;
+    position: absolute;
 
     &--horizontal {
       width: 10px;
       height: calc(100% - 10px);
-      margin-left: -12px;
+      left: 3px;
     }
 
     &--vertical {
       height: 10px;
-      width: calc(100% - 10px);
-      margin-top: -12px;
+      width: calc(100% - 20px);
+      top: 3px;
+      left: 6px;
     }
   }
 
@@ -54,7 +59,7 @@
 
     &--vertical {
       justify-content: flex-end;
-      width: 14px;
+      width: 18px;
       height: 10px;
       top: 0px;
       right: -8px;
@@ -76,11 +81,23 @@
   &__transfer {
     width: 100%;
     height: 100%;
-    background-image: -webkit-repeating-radial-gradient(center center, rgba(0,0,0,.2), rgba(0,0,0,.2) 1px, transparent 1px, transparent 100%);
-    background-image: -moz-repeating-radial-gradient(center center, rgba(0,0,0,.2), rgba(0,0,0,.2) 1px, transparent 1px, transparent 100%);
-    background-image: -ms-repeating-radial-gradient(center center, rgba(0,0,0,.2), rgba(0,0,0,.2) 1px, transparent 1px, transparent 100%);
-    background-image: repeating-radial-gradient(center center, rgba(0,0,0,.2), rgba(0,0,0,.2) 1px, transparent 1px, transparent 100%);
+    background-image: -webkit-repeating-radial-gradient(center center, rgba(0,0,0,.1), rgba(0,0,0,.1) 1px, transparent 1px, transparent 100%);
+    background-image: -moz-repeating-radial-gradient(center center, rgba(0,0,0,.1), rgba(0,0,0,.1) 1px, transparent 1px, transparent 100%);
+    background-image: -ms-repeating-radial-gradient(center center, rgba(0,0,0,.1), rgba(0,0,0,.1) 1px, transparent 1px, transparent 100%);
+    background-image: repeating-radial-gradient(center center, rgba(0,0,0,.1), rgba(0,0,0,.1) 1px, transparent 1px, transparent 100%);
     background-size: 5px 5px;
     cursor: move;
+  }
+
+  &__resize {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-bottom: 1.5px solid rgba(0,0,0,.15);
+    border-right: 1.5px solid rgba(0,0,0,.15);
+    cursor: nwse-resize;
+    bottom: 2px;
+    right: 2px;
+    border-radius: 2px;
   }
 }

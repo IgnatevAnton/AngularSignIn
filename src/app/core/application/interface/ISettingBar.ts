@@ -8,6 +8,8 @@ export interface ISettingBar {
   readonly position: { x: number, y: number };
   readonly size: { width: number, height: number };
   readonly isClosed: boolean;
+  readonly isResizable: boolean;
+  readonly isDraggable: boolean;
   isVisible: boolean;
 
 }
