@@ -1,1 +1,1 @@
-export type { ISettingBar } from "./ISettingBar";
+export type { ISettingBar } from './ISettingBar';

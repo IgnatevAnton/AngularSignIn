@@ -1,10 +1,11 @@
-import { DomainContainerForDecorator } from "../containerForDecorator";
-import { ILoggerService } from "../services/interface/ILoggerService";
-import { LoggerServiceDebugToken } from "../tokens";
+import { DomainContainerForDecorator } from '../containerForDecorator';
+import { ILoggerService } from '../services/interface/ILoggerService';
+import { LoggerServiceDebugToken } from '../tokens';
 
 export function DebugMethod() {
-  return function (target: Object, methodName: string, descriptor: PropertyDescriptor) {
+  return function (target: object, methodName: string, descriptor: PropertyDescriptor) {
     const method = descriptor.value;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     descriptor.value = function (...arg: any[]) {
       const time = performance.now();
       const logger: ILoggerService | undefined = DomainContainerForDecorator.get(LoggerServiceDebugToken);

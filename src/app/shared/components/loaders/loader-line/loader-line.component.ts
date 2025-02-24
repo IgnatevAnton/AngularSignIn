@@ -5,8 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   standalone: true,
   templateUrl: './loader-line.component.html',
   styleUrl: './loader-line.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoaderLineComponent {
-
-}
+export class LoaderLineComponent {}

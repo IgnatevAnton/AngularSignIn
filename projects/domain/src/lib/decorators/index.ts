@@ -1,1 +1,1 @@
-export { DebugMethod } from "./Debug";
+export { DebugMethod } from './Debug';

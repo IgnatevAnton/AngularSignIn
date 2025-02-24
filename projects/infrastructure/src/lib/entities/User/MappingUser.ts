@@ -4,9 +4,10 @@ import { IPipelineBehevior } from '../../interface/IPipelineBehevior';
 import { IUserResponse } from '../../interface/IUserResponse';
 
 export class MappingUser implements IPipelineBehevior {
-
   private _data: any | null = null;
-  get data(): any | null { return this._data; }
+  get data(): any | null {
+    return this._data;
+  }
 
   set(data: any): IPipelineBehevior {
     this._data = null;
@@ -19,5 +20,4 @@ export class MappingUser implements IPipelineBehevior {
     this._data = user;
     return this;
   }
-
 }

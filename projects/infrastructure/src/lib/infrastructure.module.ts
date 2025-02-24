@@ -19,8 +19,7 @@ import { ApplicationTokens } from '#application';
 
     { provide: ApplicationTokens.UserRepositoryToken, useClass: UserRepositoryHttpService },
     { provide: ApplicationTokens.SettingInterfaceServiceToken, useClass: SettingInterfaceLocalStorageService },
-    { provide: ApplicationTokens.FollowersRepositoryToken, useClass: FollowersRepositoryHttpService }
-
-  ]
+    { provide: ApplicationTokens.FollowersRepositoryToken, useClass: FollowersRepositoryHttpService },
+  ],
 })
-export class InfrastructureModule { }
+export class InfrastructureModule {}

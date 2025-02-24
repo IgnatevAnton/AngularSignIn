@@ -5,11 +5,10 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   standalone: false,
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent {
-
-  public isRegsitarationForm: boolean = false;
+  public isRegsitarationForm = false;
   public isLoadingUser!: boolean;
   @Input() public isConfirm: boolean | null = null;
   @Input() public email: string | null = null;
@@ -18,5 +17,4 @@ export class SignInComponent {
     event.preventDefault();
     this.isRegsitarationForm = !this.isRegsitarationForm;
   }
-
 }

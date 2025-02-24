@@ -1,9 +1,8 @@
-import { IUserResponse } from "../../interface";
-
+import { IUserResponse } from '../../interface';
 
 export class UserResponse implements IUserResponse {
-    email: string = "";
-    uid: string = "";
-    name: string = "";
-    isConfirm: boolean = false;
+  email = '';
+  uid = '';
+  name = '';
+  isConfirm = false;
 }

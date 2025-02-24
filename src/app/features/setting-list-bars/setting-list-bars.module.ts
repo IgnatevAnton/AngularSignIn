@@ -4,17 +4,13 @@ import { SettingListBarsComponent } from '#presentation/features/setting-list-ba
 import { PanelComponent } from '#presentation/shared/components/panel/panel.component';
 import { DefaultSettingListBars } from '../../constants/DefaultSettingBar/DefaultSettingListBars';
 
-
-
 @NgModule({
-  declarations: [ SettingListBarsComponent ],
-  imports: [ PanelComponent ],
-  exports: [SettingListBarsComponent]
+  declarations: [SettingListBarsComponent],
+  imports: [PanelComponent],
+  exports: [SettingListBarsComponent],
 })
 export class SettingListBarsModule {
-  constructor(
-    @Inject(ApplicationTokens.DefaultSettingBarsToken) defaultSettingBars: Map<string, any>
-  ) {
+  constructor(@Inject(ApplicationTokens.DefaultSettingBarsToken) defaultSettingBars: Map<string, any>) {
     defaultSettingBars.set(DefaultSettingListBars.name, DefaultSettingListBars);
   }
 }

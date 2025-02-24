@@ -4,7 +4,7 @@ import { InfrastructureContainerForDecorator } from '../../containerForDecorator
 import { pipeConveyor } from '../pipe/pipeConveyor';
 
 export function PipelineObservible(token: InjectionToken<IPipelineBehevior>) {
-  return function (target: Object, methodName: string, descriptor: PropertyDescriptor) {
+  return function (target: object, methodName: string, descriptor: PropertyDescriptor) {
     const method = descriptor.value;
     descriptor.value = function (...arg: any[]) {
       const respClass: IPipelineBehevior[] = InfrastructureContainerForDecorator.get(token);
@@ -12,4 +12,3 @@ export function PipelineObservible(token: InjectionToken<IPipelineBehevior>) {
     };
   };
 }
-

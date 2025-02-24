@@ -1,4 +1,4 @@
 export enum BarTypes {
   HORIZONTAL = 'HORIZONTAL',
-  VERTICAL = 'VERTICAL'
+  VERTICAL = 'VERTICAL',
 }

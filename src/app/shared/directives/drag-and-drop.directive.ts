@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, Output, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, Output, Renderer2, OnChanges, OnDestroy } from '@angular/core';
 import { debounceTime, fromEvent, Subscription } from 'rxjs';
 import { BarTypes } from '#application';
 
@@ -6,8 +6,7 @@ import { BarTypes } from '#application';
   selector: '[appDragAndDrop]',
   standalone: true,
 })
-export class DragAndDropDirective {
-
+export class DragAndDropDirective implements OnChanges, OnDestroy {
   @Input() public type!: BarTypes;
   @Input() public isStartDrag!: boolean;
   @Output() public handleDrop = new EventEmitter();
@@ -24,15 +23,18 @@ export class DragAndDropDirective {
   private _subscriptionUp?: Subscription;
   private _subscriptionResize?: Subscription;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2
+  ) {
     this._subscriptionResize = fromEvent(window, 'resize').subscribe(() => this.setStylePosition(this.y, this.x));
   }
 
   ngOnChanges() {
     this.setStylePosition(this.y, this.x);
     if (this.isStartDrag) {
-      this._subscriptionMove = fromEvent<MouseEvent>(document, 'mousemove').subscribe(e => this.nextMouseMove(e));
-      this._subscriptionUp = fromEvent<MouseEvent>(document, 'mouseup').subscribe(e => this.nextMouseUp(e));
+      this._subscriptionMove = fromEvent<MouseEvent>(document, 'mousemove').subscribe((e) => this.nextMouseMove(e));
+      this._subscriptionUp = fromEvent<MouseEvent>(document, 'mouseup').subscribe((e) => this.nextMouseUp(e));
     } else {
       this.unsubscribe();
     }
@@ -46,15 +48,19 @@ export class DragAndDropDirective {
   private setStylePosition(top: number, left: number) {
     const maxTop = window.innerHeight - this.height - 2;
     const maxLeft = window.innerWidth - this.width - 2;
-    this.renderer.setStyle(this.el.nativeElement, 'left', (left > maxLeft ? maxLeft : (left < 2) ? 2 : left) + 'px');
-    this.renderer.setStyle(this.el.nativeElement, 'top', (top > maxTop ? maxTop: (top < 2) ? 2 : top) + 'px');
+    this.renderer.setStyle(this.el.nativeElement, 'left', (left > maxLeft ? maxLeft : left < 2 ? 2 : left) + 'px');
+    this.renderer.setStyle(this.el.nativeElement, 'top', (top > maxTop ? maxTop : top < 2 ? 2 : top) + 'px');
   }
 
   private nextMouseMove(e: MouseEvent) {
-    if (this.offsetX === undefined) { this.offsetX = e.clientX }
-    if (this.offsetY === undefined) { this.offsetY = e.clientY }
-    const top = (e.clientY - this.offsetY + this.y);
-    const left = (e.clientX - this.offsetX + this.x);
+    if (this.offsetX === undefined) {
+      this.offsetX = e.clientX;
+    }
+    if (this.offsetY === undefined) {
+      this.offsetY = e.clientY;
+    }
+    const top = e.clientY - this.offsetY + this.y;
+    const left = e.clientX - this.offsetX + this.x;
     this.setStylePosition(top, left);
   }
 
@@ -73,5 +79,4 @@ export class DragAndDropDirective {
     this._subscriptionMove?.unsubscribe();
     this._subscriptionUp?.unsubscribe();
   }
-
 }

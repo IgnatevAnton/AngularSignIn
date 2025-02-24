@@ -3,12 +3,16 @@ import { DomainContainerForDecorator } from './containerForDecorator';
 import { LocalLoggerService } from './services/local-logger.service';
 import { User } from './entities/User';
 import { UserRegistration } from './entities/UserRegistration';
-import { FactoryUserRegistrationToken, FactoryUserToken, LoggerServiceDebugToken, LoggerServiceInfoToken, LoggerTimeThreshold } from './tokens';
+import {
+  FactoryUserRegistrationToken,
+  FactoryUserToken,
+  LoggerServiceDebugToken,
+  LoggerServiceInfoToken,
+  LoggerTimeThreshold,
+} from './tokens';
 import { ILoggerService } from './services';
 
-const providersDev: Provider[] = [
-  { provide: LoggerServiceDebugToken, useClass: LocalLoggerService }
-];
+const providersDev: Provider[] = [{ provide: LoggerServiceDebugToken, useClass: LocalLoggerService }];
 
 @NgModule({
   providers: [
@@ -16,8 +20,8 @@ const providersDev: Provider[] = [
     { provide: LoggerServiceInfoToken, useClass: LocalLoggerService },
     { provide: FactoryUserToken, useValue: () => new User() },
     { provide: FactoryUserRegistrationToken, useValue: () => new UserRegistration() },
-    ...(isDevMode() ? providersDev : [])
-  ]
+    ...(isDevMode() ? providersDev : []),
+  ],
 })
 export class DomainModule {
   constructor(@Optional() @Inject(LoggerServiceDebugToken) loggerDebug?: ILoggerService | undefined) {

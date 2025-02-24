@@ -6,7 +6,6 @@ import { ApplicationServices, ApplicationTokens } from '#application';
 
 @Injectable()
 export class FollowersRepositoryHttpService implements ApplicationServices.IFollowersRepository {
-
   private _url: string = inject(ApplicationTokens.URL_REST_API);
   private _client: HttpClient = inject(HttpClient);
 
@@ -16,12 +15,12 @@ export class FollowersRepositoryHttpService implements ApplicationServices.IFoll
   }
 
   @DomainDecoators.DebugMethod()
-  addFollowers(group:string, followers: DomainInterface.IFollowerUser[]): Observable<boolean> {
+  addFollowers(group: string, followers: DomainInterface.IFollowerUser[]): Observable<boolean> {
     throw new Error('Method not implemented.');
   }
 
   @DomainDecoators.DebugMethod()
-  removeFollowers(group:string, followers: DomainInterface.IFollowerUser[]): Observable<boolean> {
+  removeFollowers(group: string, followers: DomainInterface.IFollowerUser[]): Observable<boolean> {
     throw new Error('Method not implemented.');
   }
 
@@ -29,6 +28,4 @@ export class FollowersRepositoryHttpService implements ApplicationServices.IFoll
   searchUser(query: string): Promise<DomainInterface.IFollowerUser[]> {
     throw new Error('Method not implemented.');
   }
-
-
 }

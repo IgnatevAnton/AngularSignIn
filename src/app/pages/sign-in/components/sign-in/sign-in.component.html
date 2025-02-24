@@ -2,29 +2,42 @@
   <section class="signIn-section">
     <div class="signIn-section__header">
       <app-logo></app-logo>
-      <div class="signIn-header__title">{{(isRegsitarationForm === false) ? (isConfirm === null) ? "Авторизация" : "Завершение регистрации" : "Регистрация"}}</div>
+      <div class="signIn-header__title">
+        {{
+          isRegsitarationForm === false
+            ? isConfirm === null
+              ? 'Авторизация'
+              : 'Завершение регистрации'
+            : 'Регистрация'
+        }}
+      </div>
     </div>
     <div class="signIn-header__loader">
       @if (isLoadingUser === true) {
-      <app-loader-line></app-loader-line>
+        <app-loader-line></app-loader-line>
       }
     </div>
     <div class="signIn-section__form">
-      @if(isRegsitarationForm === true) {
-      <app-registration-from (changeIsLoadingRegistrationUser)="isLoadingUser = $event" (changeIsRegistrationForm)="isRegsitarationForm = $event"></app-registration-from>
+      @if (isRegsitarationForm === true) {
+        <app-registration-from
+          (changeIsLoadingRegistrationUser)="isLoadingUser = $event"
+          (changeIsRegistrationForm)="isRegsitarationForm = $event"
+        ></app-registration-from>
       } @else if (isConfirm === null) {
-      <app-sign-in-form (changeIsLoadingUser)="isLoadingUser = $event"></app-sign-in-form>
+        <app-sign-in-form (changeIsLoadingUser)="isLoadingUser = $event"></app-sign-in-form>
       } @else {
-      <app-verification-form (changeIsLoadingVerificationUser)="isLoadingUser = $event" [email]="email ?? '' "></app-verification-form>
+        <app-verification-form
+          (changeIsLoadingVerificationUser)="isLoadingUser = $event"
+          [email]="email ?? ''"
+        ></app-verification-form>
       }
     </div>
     <div class="signIn-section__footer">
-      @if(isRegsitarationForm === false) {
-      <p>У вас еще нет учетной записи? <a (click)="changeIsRegistrationForm($event)">Зарегистрируйтесь сейчас</a></p>
+      @if (isRegsitarationForm === false) {
+        <p>У вас еще нет учетной записи? <a (click)="changeIsRegistrationForm($event)">Зарегистрируйтесь сейчас</a></p>
       } @else {
-      <p>У вас уже есть аккаунт? <a (click)="changeIsRegistrationForm($event)">Войти</a></p>
+        <p>У вас уже есть аккаунт? <a (click)="changeIsRegistrationForm($event)">Войти</a></p>
       }
     </div>
   </section>
 </div>
-

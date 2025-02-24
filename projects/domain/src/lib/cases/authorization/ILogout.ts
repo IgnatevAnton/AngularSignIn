@@ -1,3 +1,3 @@
 export interface ILogout {
-  logout(): void
+  logout(): void;
 }

@@ -1,1 +1,1 @@
-export type { ILoggerService } from "./interface/ILoggerService";
+export type { ILoggerService } from './interface/ILoggerService';

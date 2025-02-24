@@ -7,28 +7,13 @@ import { PanelComponent } from '#presentation/shared/components/panel/panel.comp
 import { ApplicationTokens } from '#application';
 import { DefaultUserProfileBar } from '#presentation/constants/DefaultSettingBar/DefaultUserProfileBar';
 
-
-
 @NgModule({
-  declarations: [
-    UserProfileBarComponent,
-    UserIconComponent,
-    UserFollowersIconComponent,
-    UserSettingBarComponent
-  ],
-  imports: [
-    PanelComponent
-  ],
-  exports: [
-    UserProfileBarComponent
-  ]
+  declarations: [UserProfileBarComponent, UserIconComponent, UserFollowersIconComponent, UserSettingBarComponent],
+  imports: [PanelComponent],
+  exports: [UserProfileBarComponent],
 })
 export class UserProfileBarModule {
-
-  constructor(
-    @Inject(ApplicationTokens.DefaultSettingBarsToken) defaultSettingBars: Map<string, any>
-  ) {
+  constructor(@Inject(ApplicationTokens.DefaultSettingBarsToken) defaultSettingBars: Map<string, any>) {
     defaultSettingBars.set(DefaultUserProfileBar.name, DefaultUserProfileBar);
   }
-
 }

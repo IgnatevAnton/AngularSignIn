@@ -8,6 +8,7 @@
     <PackageJsonScriptsBuild Condition="$(PackageJsonScriptsBuild) == ''">ng build</PackageJsonScriptsBuild>
     <PackageJsonScriptsWatch Condition="$(PackageJsonScriptsWatch) == ''">ng build --watch --configuration development</PackageJsonScriptsWatch>
     <PackageJsonScriptsTest Condition="$(PackageJsonScriptsTest) == ''">ng test</PackageJsonScriptsTest>
+    <PackageJsonScriptsLint Condition="$(PackageJsonScriptsLint) == ''">ng lint</PackageJsonScriptsLint>
     <PackageJsonPrivate Condition="$(PackageJsonPrivate) == ''">true</PackageJsonPrivate>
     <PackageJsonDependenciesAngularAnimations Condition="$(PackageJsonDependenciesAngularAnimations) == ''">^19.1.0</PackageJsonDependenciesAngularAnimations>
     <PackageJsonDependenciesAngularCommon Condition="$(PackageJsonDependenciesAngularCommon) == ''">^19.1.0</PackageJsonDependenciesAngularCommon>
@@ -26,7 +27,10 @@
     <PackageJsonDevdependenciesAngularCompilerCli Condition="$(PackageJsonDevdependenciesAngularCompilerCli) == ''">^19.1.0</PackageJsonDevdependenciesAngularCompilerCli>
     <PackageJsonDevdependenciesNgxEnvBuilder Condition="$(PackageJsonDevdependenciesNgxEnvBuilder) == ''">^19.0.4</PackageJsonDevdependenciesNgxEnvBuilder>
     <PackageJsonDevdependenciesTypesJasmine Condition="$(PackageJsonDevdependenciesTypesJasmine) == ''">~5.1.0</PackageJsonDevdependenciesTypesJasmine>
-    <PackageJsonDevdependenciesAngularEslint Condition="$(PackageJsonDevdependenciesAngularEslint) == ''">^19.1.0</PackageJsonDevdependenciesAngularEslint>
+    <PackageJsonDevdependenciesAngularEslint Condition="$(PackageJsonDevdependenciesAngularEslint) == ''">19.1.0</PackageJsonDevdependenciesAngularEslint>
+    <PackageJsonDevdependenciesEslint Condition="$(PackageJsonDevdependenciesEslint) == ''">^9.20.0</PackageJsonDevdependenciesEslint>
+    <PackageJsonDevdependenciesEslintConfigPrettier Condition="$(PackageJsonDevdependenciesEslintConfigPrettier) == ''">^10.0.1</PackageJsonDevdependenciesEslintConfigPrettier>
+    <PackageJsonDevdependenciesEslintPluginPrettier Condition="$(PackageJsonDevdependenciesEslintPluginPrettier) == ''">^5.2.3</PackageJsonDevdependenciesEslintPluginPrettier>
     <PackageJsonDevdependenciesJasmineCore Condition="$(PackageJsonDevdependenciesJasmineCore) == ''">~5.5.0</PackageJsonDevdependenciesJasmineCore>
     <PackageJsonDevdependenciesKarma Condition="$(PackageJsonDevdependenciesKarma) == ''">~6.4.0</PackageJsonDevdependenciesKarma>
     <PackageJsonDevdependenciesKarmaChromeLauncher Condition="$(PackageJsonDevdependenciesKarmaChromeLauncher) == ''">~3.2.0</PackageJsonDevdependenciesKarmaChromeLauncher>
@@ -34,6 +38,9 @@
     <PackageJsonDevdependenciesKarmaJasmine Condition="$(PackageJsonDevdependenciesKarmaJasmine) == ''">~5.1.0</PackageJsonDevdependenciesKarmaJasmine>
     <PackageJsonDevdependenciesKarmaJasmineHtmlReporter Condition="$(PackageJsonDevdependenciesKarmaJasmineHtmlReporter) == ''">~2.1.0</PackageJsonDevdependenciesKarmaJasmineHtmlReporter>
     <PackageJsonDevdependenciesNgPackagr Condition="$(PackageJsonDevdependenciesNgPackagr) == ''">^19.1.0</PackageJsonDevdependenciesNgPackagr>
+    <PackageJsonDevdependenciesPrettier Condition="$(PackageJsonDevdependenciesPrettier) == ''">^3.5.2</PackageJsonDevdependenciesPrettier>
+    <PackageJsonDevdependenciesPrettierEslint Condition="$(PackageJsonDevdependenciesPrettierEslint) == ''">^16.3.0</PackageJsonDevdependenciesPrettierEslint>
     <PackageJsonDevdependenciesTypescript Condition="$(PackageJsonDevdependenciesTypescript) == ''">~5.7.2</PackageJsonDevdependenciesTypescript>
+    <PackageJsonDevdependenciesTypescriptEslint Condition="$(PackageJsonDevdependenciesTypescriptEslint) == ''">8.23.0</PackageJsonDevdependenciesTypescriptEslint>
   </PropertyGroup>
 </Project>

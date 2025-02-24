@@ -1,5 +1,19 @@
 <form class="signIn-form" [formGroup]="authorizationForm" (ngSubmit)="onSubmit()">
-  <input type="text" class="input" [class.input-invalid]="isErrorUser()" placeholder="Логин" formControlName="login" name="login" />
-  <input type="password" class="input" [class.input-invalid]="isErrorUser()" placeholder="Пароль" formControlName="password" name="password" />
+  <input
+    type="text"
+    class="input"
+    [class.input-invalid]="isErrorUser()"
+    placeholder="Логин"
+    formControlName="login"
+    name="login"
+  />
+  <input
+    type="password"
+    class="input"
+    [class.input-invalid]="isErrorUser()"
+    placeholder="Пароль"
+    formControlName="password"
+    name="password"
+  />
   <button class="button" type="submit" [disabled]="isLoadingUser() || !authorizationForm.valid">Вход</button>
 </form>

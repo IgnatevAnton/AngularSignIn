@@ -8,20 +8,9 @@ import { VerificationFormComponent } from '#presentation/features/verification-f
 import { LogoComponent } from '#presentation/shared/components/logo/logo.component';
 import { LoaderLineComponent } from '#presentation/shared/components/loaders/loader-line/loader-line.component';
 
-
 @NgModule({
-  declarations: [
-    SignInComponent,
-    SignInFormComponent,
-    RegistrationFromComponent,
-    VerificationFormComponent,
-  ],
-  imports: [
-    ReactiveFormsModule,
-    LogoComponent,
-    LoaderLineComponent
-  ],
-  exports: [ SignInComponent ]
+  declarations: [SignInComponent, SignInFormComponent, RegistrationFromComponent, VerificationFormComponent],
+  imports: [ReactiveFormsModule, LogoComponent, LoaderLineComponent],
+  exports: [SignInComponent],
 })
-export class SignInModule {
-}
+export class SignInModule {}

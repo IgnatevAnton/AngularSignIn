@@ -1,17 +1,15 @@
-import { ChangeDetectionStrategy, Component, Inject, Signal } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, Inject, Signal } from '@angular/core';
 import { DomainInterface } from '#domain';
 import { ApplicationTokens, ApplicationServices } from '#application';
-
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: false,
   styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-
+export class AppComponent implements AfterContentInit {
   public readonly title = '_AppComponent';
   public readonly user$: Signal<DomainInterface.IUser | null>;
   public readonly isCheckUser$: Signal<boolean>;
@@ -51,5 +49,4 @@ export class AppComponent {
   //ngAfterViewInit() {
   //  console.log("ngAfterViewInit");
   //}
-
 }

@@ -1,4 +1,4 @@
-import { UserRoles } from "../constant/UserRoles";
+import { UserRoles } from '../constant/UserRoles';
 
 export interface IUser {
   id: number;

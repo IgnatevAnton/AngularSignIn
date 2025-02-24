@@ -4,10 +4,9 @@ import { DomainInterface } from '#domain';
 @Component({
   selector: 'app-user-icon',
   standalone: false,
-  
   templateUrl: './user-icon.component.html',
   styleUrl: './user-icon.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserIconComponent {
   @Input() public user!: DomainInterface.IUser | null;
@@ -16,5 +15,4 @@ export class UserIconComponent {
   public onOpenUserProfile(): void {
     this.handleOpenUserProfile.emit();
   }
-
 }

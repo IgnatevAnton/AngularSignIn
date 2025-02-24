@@ -1,1 +1,1 @@
-export const InfrastructureContainerForDecorator: Map<any, any> = new Map();
+export const InfrastructureContainerForDecorator = new Map<any, any>();

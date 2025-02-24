@@ -5,19 +5,9 @@ import { UserFollowersBarModule } from '#presentation/features/user-followers-ba
 import { UserProfileModule } from '#presentation/features/user-profile/user-profile.module';
 import { SettingListBarsModule } from '#presentation/features/setting-list-bars/setting-list-bars.module';
 
-
 @NgModule({
-  declarations: [
-    MainComponent
-  ],
-  imports: [
-    UserProfileBarModule,
-    UserFollowersBarModule,
-    UserProfileModule,
-    SettingListBarsModule
-  ],
-  exports: [
-    MainComponent
-  ]
+  declarations: [MainComponent],
+  imports: [UserProfileBarModule, UserFollowersBarModule, UserProfileModule, SettingListBarsModule],
+  exports: [MainComponent],
 })
-export class MainModule { }
+export class MainModule {}

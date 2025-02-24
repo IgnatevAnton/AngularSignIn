@@ -6,7 +6,7 @@ import { BarNames } from '#application';
   standalone: false,
   templateUrl: './setting-list-bars.component.html',
   styleUrl: './setting-list-bars.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingListBarsComponent {
   public name: BarNames = BarNames.SETTING_LIST_BARS;

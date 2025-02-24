@@ -1,28 +1,38 @@
-@if (setting && setting.isVisible === true || setting && setting.isClosed === false) {
-<section class="panel-wrapper {{(setting.type === 'HORIZONTAL') ? 'panel-wrapper--horizontal' : 'panel-wrapper--vertical'}}"
-         appDragAndDrop
-         appResize
-         [isStartDrag]="isStartDrag"
-         [isStartResize]="isStartResize"
-         (handleDrop)="onEndDrop($event)"
-         (handleEndResize)="onEndResize($event)"
-         [x]="setting.position.x"
-         [y]="setting.position.y"
-         [width]="setting.size.width"
-         [height]="setting.size.height">
-    <div class="panel-wrapper__action {{(setting.type === 'HORIZONTAL') ? 'panel-wrapper__action--horizontal' : 'panel-wrapper__action--vertical'}}">
-        @if (setting && setting.isDraggable === true) {
-        <div class="panel-wrapper__transfer " (mousedown)="onStartDrag()"></div>
-        }
-        @if (setting && setting.isClosed === true) {
-        <div class="panel-wrapper__close {{(setting.type === 'HORIZONTAL') ? 'panel-wrapper__close--horizontal' : 'panel-wrapper__close--vertical'}}">
-            <img src="./assets/close.svg" (click)="onClose()" />
+@if ((setting && setting.isVisible === true) || (setting && setting.isClosed === false)) {
+  <section
+    class="panel-wrapper {{ setting.type === 'HORIZONTAL' ? 'panel-wrapper--horizontal' : 'panel-wrapper--vertical' }}"
+    appDragAndDrop
+    appResize
+    [isStartDrag]="isStartDrag"
+    [isStartResize]="isStartResize"
+    (handleDrop)="onEndDrop($event)"
+    (handleEndResize)="onEndResize($event)"
+    [x]="setting.position.x"
+    [y]="setting.position.y"
+    [width]="setting.size.width"
+    [height]="setting.size.height"
+  >
+    <div
+      class="panel-wrapper__action {{
+        setting.type === 'HORIZONTAL' ? 'panel-wrapper__action--horizontal' : 'panel-wrapper__action--vertical'
+      }}"
+    >
+      @if (setting && setting.isDraggable === true) {
+        <div class="panel-wrapper__transfer" (mousedown)="onStartDrag()"></div>
+      }
+      @if (setting && setting.isClosed === true) {
+        <div
+          class="panel-wrapper__close {{
+            setting.type === 'HORIZONTAL' ? 'panel-wrapper__close--horizontal' : 'panel-wrapper__close--vertical'
+          }}"
+        >
+          <img src="./assets/close.svg" (click)="onClose()" />
         </div>
-        }
+      }
     </div>
     <ng-content></ng-content>
     @if (setting && setting.isResizable === true) {
-    <div class="panel-wrapper__resize" (mousedown)="onStartResize()"></div>
+      <div class="panel-wrapper__resize" (mousedown)="onStartResize()"></div>
     }
-</section>
+  </section>
 }

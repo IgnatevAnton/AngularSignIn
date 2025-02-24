@@ -2,16 +2,18 @@ import { Inject, Injectable, signal, Signal, WritableSignal } from '@angular/cor
 import { DomainDecoators } from '#domain';
 import { ApplicationInterfaces, ApplicationServices, ApplicationTokens, BarNames } from '#application';
 
-
 @Injectable()
 export class SettingInterfaceLocalStorageService implements ApplicationServices.ISettingInterfaceService {
-
-  private _defaultSetting: Map<BarNames, ApplicationInterfaces.ISettingBar> = new Map();
+  private _defaultSetting = new Map<BarNames, ApplicationInterfaces.ISettingBar>();
   private _settings: WritableSignal<Map<BarNames, ApplicationInterfaces.ISettingBar>> = signal(new Map());
   private _isLoadSetting: WritableSignal<boolean> = signal(false);
-  private _key: string = "";
-  get settings(): Signal<Map<BarNames, ApplicationInterfaces.ISettingBar>> { return this._settings.asReadonly(); }
-  get isLoadSetting(): Signal<boolean> { return this._isLoadSetting.asReadonly(); }
+  private _key = '';
+  get settings(): Signal<Map<BarNames, ApplicationInterfaces.ISettingBar>> {
+    return this._settings.asReadonly();
+  }
+  get isLoadSetting(): Signal<boolean> {
+    return this._isLoadSetting.asReadonly();
+  }
 
   constructor(
     @Inject(ApplicationTokens.DefaultSettingBarsToken) defaultSettings: Map<BarNames, ApplicationInterfaces.ISettingBar>
@@ -36,21 +38,25 @@ export class SettingInterfaceLocalStorageService implements ApplicationServices.
 
   @DomainDecoators.DebugMethod()
   public loadSetting(key: string): void {
-
     this.initial(key);
 
     const setting = localStorage.getItem(`${this._key}_settingInterface`);
     if (setting) {
-      let loadSettings: Map<BarNames, ApplicationInterfaces.ISettingBar> = new Map();
+      let loadSettings = new Map<BarNames, ApplicationInterfaces.ISettingBar>();
       try {
-        loadSettings = new Map(Object.entries<ApplicationInterfaces.ISettingBar>((JSON.parse(setting))) as [BarNames, ApplicationInterfaces.ISettingBar][]);   
-      } catch {
-
-      }
+        loadSettings = new Map(
+          Object.entries<ApplicationInterfaces.ISettingBar>(JSON.parse(setting)) as [
+            BarNames,
+            ApplicationInterfaces.ISettingBar,
+          ][]
+        );
+      } catch {}
       const newSetting = new Map(this.settings());
       for (const [key] of newSetting) {
         const loadSetting = loadSettings.get(key);
-        if (loadSetting === undefined) { continue; }
+        if (loadSetting === undefined) {
+          continue;
+        }
         newSetting.set(key, loadSetting);
       }
       this._settings.set(newSetting);
@@ -63,5 +69,4 @@ export class SettingInterfaceLocalStorageService implements ApplicationServices.
   private saveSetting(): void {
     localStorage.setItem(`${this._key}_settingInterface`, JSON.stringify(Object.fromEntries(this.settings())));
   }
-
 }

@@ -5,8 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   standalone: true,
   templateUrl: './loader-spinner.component.html',
   styleUrl: './loader-spinner.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoaderSpinnerComponent {
-
-}
+export class LoaderSpinnerComponent {}

@@ -1,116 +1,113 @@
 {
-	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-	"version": 1,
-	"newProjectRoot": "projects",
-	"projects": {
-		"AngularSignIn": {
-			"projectType": "application",
-			"schematics": {
-				"@schematics/angular:component": {
-					"standalone": false,
-					"style": "scss"
-				},
-				"@schematics/angular:directive": {
-					"standalone": false
-				},
-				"@schematics/angular:pipe": {
-					"standalone": false
-				}
-			},
-			"root": "",
-			"sourceRoot": "src",
-			"prefix": "app",
-			"architect": {
-				"build": {
-					"builder": "@ngx-env/builder:application",
-					"options": {
-						"outputPath": "dist/angular-sign-in",
-						"index": "src/index.html",
-						"browser": "src/main.ts",
-						"polyfills": [
-							"zone.js"
-						],
-						"tsConfig": "tsconfig.app.json",
-						"assets": [
-							{
-								"glob": "**/*",
-								"input": "public"
-							}
-						],
-						"styles": [
-							"src/styles.scss"
-						],
-						"scripts": []
-					},
-					"configurations": {
-						"production": {
-							"budgets": [
-								{
-									"type": "initial",
-									"maximumWarning": "500kB",
-									"maximumError": "1MB"
-								},
-								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "4kB",
-									"maximumError": "8kB"
-								}
-							],
-							"outputHashing": "all"
-						},
-						"development": {
-							"optimization": false,
-							"extractLicenses": false,
-							"sourceMap": true
-						}
-					},
-					"defaultConfiguration": "production"
-				},
-				"serve": {
-					"builder": "@ngx-env/builder:dev-server",
-					"configurations": {
-						"production": {
-							"buildTarget": "AngularSignIn:build:production"
-						},
-						"development": {
-							"buildTarget": "AngularSignIn:build:development"
-						}
-					},
-					"defaultConfiguration": "development",
-					"options": {
-						"port": 63953,
-						"ssl": true,
-						"sslKey": "localhost.key",
-						"sslCert": "localhost.crt"
-					}
-				},
-				"extract-i18n": {
-					"builder": "@ngx-env/builder:extract-i18n",
-					"options": {}
-				},
-				"test": {
-					"builder": "@ngx-env/builder:karma",
-					"options": {
-						"polyfills": [
-							"zone.js",
-							"zone.js/testing"
-						],
-						"tsConfig": "tsconfig.spec.json",
-						"assets": [
-							{
-								"glob": "**/*",
-								"input": "public"
-							}
-						],
-						"styles": [
-							"src/styles.scss"
-						],
-						"scripts": [],
-						"karmaConfig": "karma.conf.js",
-						"builderMode": "browser"
-					}
-				}
-			}
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "AngularSignIn": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "standalone": false,
+          "style": "scss"
+        },
+        "@schematics/angular:directive": {
+          "standalone": false
+        },
+        "@schematics/angular:pipe": {
+          "standalone": false
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@ngx-env/builder:application",
+          "options": {
+            "outputPath": "dist/angular-sign-in",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": ["src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@ngx-env/builder:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "AngularSignIn:build:production"
+            },
+            "development": {
+              "buildTarget": "AngularSignIn:build:development"
+            }
+          },
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 63953,
+            "ssl": true,
+            "sslKey": "localhost.key",
+            "sslCert": "localhost.crt"
+          }
+        },
+        "extract-i18n": {
+          "builder": "@ngx-env/builder:extract-i18n",
+          "options": {}
+        },
+        "test": {
+          "builder": "@ngx-env/builder:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": ["src/styles.scss"],
+            "scripts": [],
+            "karmaConfig": "karma.conf.js",
+            "builderMode": "browser"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
+        }
+      }
     },
     "domain": {
       "projectType": "library",
@@ -137,10 +134,14 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/domain/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/domain/**/*.ts", "projects/domain/**/*.html"],
+            "eslintConfig": "projects/domain/eslint.config.js"
           }
         }
       }
@@ -170,10 +171,14 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/application/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/application/**/*.ts", "projects/application/**/*.html"],
+            "eslintConfig": "projects/application/eslint.config.js"
           }
         }
       }
@@ -203,16 +208,21 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/infrastructure/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/infrastructure/**/*.ts", "projects/infrastructure/**/*.html"],
+            "eslintConfig": "projects/infrastructure/eslint.config.js"
           }
         }
       }
     }
-	},
-	"cli": {
-		"analytics": "55a4a770-bd8c-42b6-87f1-f882bb039827"
-	}
+  },
+  "cli": {
+    "analytics": "55a4a770-bd8c-42b6-87f1-f882bb039827",
+    "schematicCollections": ["angular-eslint"]
+  }
 }
