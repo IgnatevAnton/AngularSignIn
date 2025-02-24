@@ -11,7 +11,7 @@ ST = Atlanta
 L = Atlanta
 O = My Organisation
 OU = My Organisational Unit
-emailAddress = email@domain.com
+emailAddress = email#domain.com
 CN = localhost
 
 [v3_req]

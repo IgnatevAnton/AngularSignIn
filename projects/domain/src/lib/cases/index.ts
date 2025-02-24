@@ -1,0 +1,10 @@
+export type { ILogin } from "./authorization/ILogin";
+export type { ILogout } from "./authorization/ILogout";
+export type { ICheckUser } from "./authorization/ICheckUser";
+export type { IRegistrationUser } from "./registration/IRegistrationUser";
+export type { IConfirmAccount } from "./registration/IConfirmAccount";
+export type { IRepeatSendCode } from "./registration/IRepeatSendCode";
+export type { IGetFollowers } from "./followers/IGetFollowers";
+export type { IAddFollowers } from "./followers/IAddFollowers";
+export type { IRemoveFollowers } from "./followers/IRemoveFollowers";
+export type { ISearchUser } from "./followers/ISearchUser";
