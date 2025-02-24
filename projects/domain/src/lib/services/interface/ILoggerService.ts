@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ILoggerService {
-  info(name: string, ...message: object[]): void;
-  warning(name: string, ...message: object[]): void;
-  error(name: string, ...message: object[]): void;
+  info(name: string, ...message: any[]): void;
+  warning(name: string, ...message: any[]): void;
+  error(name: string, ...message: any[]): void;
   time(name: string, time: number): void;
 }

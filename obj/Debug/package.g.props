@@ -8,7 +8,8 @@
     <PackageJsonScriptsBuild Condition="$(PackageJsonScriptsBuild) == ''">ng build</PackageJsonScriptsBuild>
     <PackageJsonScriptsWatch Condition="$(PackageJsonScriptsWatch) == ''">ng build --watch --configuration development</PackageJsonScriptsWatch>
     <PackageJsonScriptsTest Condition="$(PackageJsonScriptsTest) == ''">ng test</PackageJsonScriptsTest>
-    <PackageJsonScriptsLint Condition="$(PackageJsonScriptsLint) == ''">ng lint</PackageJsonScriptsLint>
+    <PackageJsonScriptsCheck Condition="$(PackageJsonScriptsCheck) == ''">npx prettier . --check &amp;&amp; ng lint</PackageJsonScriptsCheck>
+    <PackageJsonScriptsFixed Condition="$(PackageJsonScriptsFixed) == ''">npx prettier . --write &amp;&amp; ng lint --fix</PackageJsonScriptsFixed>
     <PackageJsonPrivate Condition="$(PackageJsonPrivate) == ''">true</PackageJsonPrivate>
     <PackageJsonDependenciesAngularAnimations Condition="$(PackageJsonDependenciesAngularAnimations) == ''">^19.1.0</PackageJsonDependenciesAngularAnimations>
     <PackageJsonDependenciesAngularCommon Condition="$(PackageJsonDependenciesAngularCommon) == ''">^19.1.0</PackageJsonDependenciesAngularCommon>

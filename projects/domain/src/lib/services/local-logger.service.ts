@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Inject, Injectable, Optional } from '@angular/core';
 import { ILoggerService } from './interface/ILoggerService';
 import { LoggerTimeThreshold } from '../tokens';
@@ -12,13 +13,13 @@ export class LocalLoggerService implements ILoggerService {
     }
   }
 
-  info(name: string, ...message: object[]): void {
+  info(name: string, ...message: any[]): void {
     console.info(` [${name}] `, ...message, ` `);
   }
-  warning(name: string, ...message: object[]): void {
+  warning(name: string, ...message: any[]): void {
     console.warn(` [${name}] `, ...message, ` `);
   }
-  error(name: string, ...message: object[]): void {
+  error(name: string, ...message: any[]): void {
     console.error(` [${name}] `, ...message, ` `);
   }
   time(name: string, time: number): void {

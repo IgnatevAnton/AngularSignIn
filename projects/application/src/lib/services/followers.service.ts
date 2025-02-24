@@ -1,6 +1,6 @@
 import { inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
-import { DomainDecoators, DomainInterface, DomainServices, DomainTokens } from '#domain';
 import { take } from 'rxjs';
+import { DomainDecoators, DomainInterface, DomainServices, DomainTokens } from '#domain';
 import { IFollowersService } from './interface/IFollowersService';
 import { IFollowersRepository } from './interface/IFollowersRepository';
 import { FollowersRepositoryToken } from '../tokens';

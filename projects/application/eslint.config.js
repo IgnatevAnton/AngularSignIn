@@ -23,6 +23,21 @@ module.exports = tseslint.config(
           style: 'kebab-case',
         },
       ],
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: '#application',
+              message: `Importing from #application is not allowed.`,
+            },
+            {
+              name: '#infrastructure',
+              message: `Importing from #infrastructure is not allowed.`,
+            },
+          ],
+        },
+      ],
     },
   },
   {
