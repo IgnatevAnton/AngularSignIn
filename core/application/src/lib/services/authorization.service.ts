@@ -84,7 +84,8 @@ export class AuthorizationService implements IAuthorizeService {
   registration(data: DomainInterface.IUserRegistration): void {
     this._userRegistrationStatus.set(true, false, null);
     const allErrors = [RegistrationStatusErrors.EMAIL, RegistrationStatusErrors.PASSWORD, RegistrationStatusErrors.USER_NAME];
-    const response: Observable<DomainInterface.IUserRegistrationStatus | null> = this._sender.send(new UserRegistrationCommand(data.login, data.email, data.password)) ?? of(null);
+    const command = new UserRegistrationCommand(data.login, data.email, data.password);
+    const response: Observable<DomainInterface.IUserRegistrationStatus | null> = this._sender.send(command) ?? of(null);
     response.pipe(take(1)).subscribe({
       next: (status: DomainInterface.IUserRegistrationStatus | null) => {
         this._logger?.info(this._title, 'registration() ', 'next =>', status);

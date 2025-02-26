@@ -12,9 +12,7 @@ import { UserGroupFollowersQuery } from '../requests/followers';
 export class FollowersService implements IFollowersService {
   private _title = '_FollowersService';
   private _timeoutMillisecondCleanError = 2000;
-  private _logger?: DomainServices.ILoggerService | null = inject(DomainTokens.LoggerServiceDebugToken, {
-    optional: true,
-  });
+  private _logger?: DomainServices.ILoggerService | null = inject(DomainTokens.LoggerServiceDebugToken, { optional: true });
   private _sender: ISender = inject(SenderToken);
 
   private _followers$: WritableSignal<DomainInterface.IFollowerUser[]> = signal<DomainInterface.IFollowerUser[]>([]);

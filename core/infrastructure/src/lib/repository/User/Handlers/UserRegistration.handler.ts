@@ -1,13 +1,13 @@
 import { Observable } from 'rxjs';
 import { ApplicationRequest } from '#application';
 import { DomainDecoators, DomainInterface } from '#domain';
-import { UserHandler } from './User.handler';
+import { HttpClientHandler } from '../../../entities/HttpClientHandler';
 
-export class UserRegistrationHandler extends UserHandler<ApplicationRequest.user.UserRegistrationCommand, Observable<DomainInterface.IUserRegistrationStatus | null>> {
+export class UserRegistrationHandler extends HttpClientHandler<ApplicationRequest.user.UserRegistrationCommand, Observable<DomainInterface.IUserRegistrationStatus | null>> {
   @DomainDecoators.DebugMethod()
-  handler(request: ApplicationRequest.user.UserRegistrationCommand): Observable<DomainInterface.IUserRegistrationStatus | null> {
+  override handler(request: ApplicationRequest.user.UserRegistrationCommand): Observable<DomainInterface.IUserRegistrationStatus | null> {
     return this._client.post<DomainInterface.IUserRegistrationStatus>(
-      this._url + 'api/user/login',
+      this._url + 'api/user/registration',
       { login: request.login, email: request.email, password: request.password },
       { responseType: 'json', withCredentials: true }
     );

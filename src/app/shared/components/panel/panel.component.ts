@@ -24,8 +24,7 @@ export class PanelComponent {
   public isStartResize = false;
 
   constructor(
-    @Inject(ApplicationTokens.SettingInterfaceServiceToken)
-    settingInterface: ApplicationServices.ISettingInterfaceService,
+    @Inject(ApplicationTokens.SettingInterfaceServiceToken) settingInterface: ApplicationServices.ISettingInterfaceService,
     @Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService,
     private _cdr: ChangeDetectorRef
   ) {
