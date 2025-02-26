@@ -1,10 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import { IPipelineBehevior, IUserResponse } from './interface';
-import { ICommandToken, IQueryHandlerToken, IQueryToken, ISender } from '@cqrs';
 
+export const URL_REST_API = new InjectionToken<string>('URL_REST_API');
 export const PipelineUserTokens = new InjectionToken<IPipelineBehevior[]>('PiplineUserTokens');
 export const FactoryUserResponseToken = new InjectionToken<() => IUserResponse>('FactoryUserResponseToken');
-export const SenderToken = new InjectionToken<ISender>('SenderToken');
-export const HandlersToken = new InjectionToken<Map<IQueryToken | ICommandToken, IQueryHandlerToken>>(
-  'SenderMappingToken'
-);

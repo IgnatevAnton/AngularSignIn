@@ -12,20 +12,12 @@
     [width]="setting.size.width"
     [height]="setting.size.height"
   >
-    <div
-      class="panel-wrapper__action {{
-        setting.type === 'HORIZONTAL' ? 'panel-wrapper__action--horizontal' : 'panel-wrapper__action--vertical'
-      }}"
-    >
+    <div class="panel-wrapper__action {{ setting.type === 'HORIZONTAL' ? 'panel-wrapper__action--horizontal' : 'panel-wrapper__action--vertical' }}">
       @if (setting && setting.isDraggable === true) {
         <div class="panel-wrapper__transfer" (mousedown)="onStartDrag()"></div>
       }
       @if (setting && setting.isClosed === true) {
-        <div
-          class="panel-wrapper__close {{
-            setting.type === 'HORIZONTAL' ? 'panel-wrapper__close--horizontal' : 'panel-wrapper__close--vertical'
-          }}"
-        >
+        <div class="panel-wrapper__close {{ setting.type === 'HORIZONTAL' ? 'panel-wrapper__close--horizontal' : 'panel-wrapper__close--vertical' }}">
           <img src="./assets/close.svg" (click)="onClose()" />
         </div>
       }

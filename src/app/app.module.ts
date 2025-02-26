@@ -13,16 +13,7 @@ import { MainModule } from '#presentation/pages/main/main.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    DomainModule,
-    ApplicationModule,
-    InfrastructureModule,
-    SignInModule,
-    MainModule,
-    LoaderSpinnerComponent,
-  ],
+  imports: [BrowserModule, AppRoutingModule, DomainModule, ApplicationModule, InfrastructureModule, SignInModule, MainModule, LoaderSpinnerComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {

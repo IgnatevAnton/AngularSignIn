@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  effect,
-  EventEmitter,
-  inject,
-  Inject,
-  Output,
-  Signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, Inject, Output, Signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { DomainDecoators } from '#domain';
@@ -29,9 +20,7 @@ export class SignInFormComponent {
 
   private formBuilder = inject(FormBuilder);
 
-  constructor(
-    @Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService
-  ) {
+  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService) {
     this._authorizationService = authorizationService;
     this.isLoadingUser = this._authorizationService.isLoadingLogin$;
     this.isErrorUser = this._authorizationService.isErrorLogin$;

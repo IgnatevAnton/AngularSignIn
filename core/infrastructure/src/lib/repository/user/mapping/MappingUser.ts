@@ -1,7 +1,7 @@
 import { DomainTokens, DomainInterface } from '#domain';
-import { InfrastructureContainerForDecorator } from '../../containerForDecorator';
-import { IPipelineBehevior } from '../../interface/IPipelineBehevior';
-import { IUserResponse } from '../../interface/IUserResponse';
+import { InfrastructureContainerForDecorator } from '../../../entities/ContainerForDecorator';
+import { IPipelineBehevior } from '../../../interface/IPipelineBehevior';
+import { IUserResponse } from '../../../interface/IUserResponse';
 
 export class MappingUser implements IPipelineBehevior {
   private _data: any | null = null;

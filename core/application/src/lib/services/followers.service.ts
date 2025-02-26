@@ -2,14 +2,14 @@ import { inject, Injectable, signal, Signal, WritableSignal } from '@angular/cor
 import { Observable, of, take } from 'rxjs';
 import { ISender } from '@cqrs';
 import { DomainDecoators, DomainInterface, DomainServices, DomainTokens } from '#domain';
-import { ApplicationServices } from '#application';
 
 import { SenderToken } from '../tokens';
 import { StatusRequest } from '../entities/StatusRequest';
-import { UserGroupFollowersQuery } from '../repository';
+import { IFollowersService } from './interface/IFollowersService';
+import { UserGroupFollowersQuery } from '../requests/followers';
 
 @Injectable()
-export class FollowersService implements ApplicationServices.IFollowersService {
+export class FollowersService implements IFollowersService {
   private _title = '_FollowersService';
   private _timeoutMillisecondCleanError = 2000;
   private _logger?: DomainServices.ILoggerService | null = inject(DomainTokens.LoggerServiceDebugToken, {
@@ -29,8 +29,7 @@ export class FollowersService implements ApplicationServices.IFollowersService {
   @DomainDecoators.DebugMethod()
   getFollowers(group: string, page: number): void {
     this._followersListStatus.set(true, false, null);
-    const response: Observable<DomainInterface.IFollowerUser[] | null> =
-      this._sender.send(new UserGroupFollowersQuery(group, page)) ?? of(null);
+    const response: Observable<DomainInterface.IFollowerUser[] | null> = this._sender.send(new UserGroupFollowersQuery(group, page)) ?? of(null);
     response.pipe(take(1)).subscribe({
       next: (followers: DomainInterface.IFollowerUser[] | null) => {
         this._logger?.info(this._title, 'check() ', 'next =>', followers);

@@ -9,10 +9,6 @@ export function matchValidator(matchTo: string, reverse?: boolean): ValidatorFn 
       }
       return null;
     }
-    return !!control.parent &&
-      !!control.parent.value &&
-      control.value === (control.parent?.controls as any)[matchTo].value
-      ? null
-      : { matching: true };
+    return !!control.parent && !!control.parent.value && control.value === (control.parent?.controls as any)[matchTo].value ? null : { matching: true };
   };
 }

@@ -134,13 +134,13 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "core/domain/tsconfig.spec.json",
-            "polyfills": [ "zone.js", "zone.js/testing" ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [ "core/domain/**/*.ts", "core/domain/**/*.html" ],
+            "lintFilePatterns": ["core/domain/**/*.ts", "core/domain/**/*.html"],
             "eslintConfig": "core/domain/eslint.config.js"
           }
         }
@@ -171,13 +171,13 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "core/application/tsconfig.spec.json",
-            "polyfills": [ "zone.js", "zone.js/testing" ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [ "core/application/**/*.ts", "core/application/**/*.html" ],
+            "lintFilePatterns": ["core/application/**/*.ts", "core/application/**/*.html"],
             "eslintConfig": "core/application/eslint.config.js"
           }
         }
@@ -208,13 +208,13 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "core/infrastructure/tsconfig.spec.json",
-            "polyfills": [ "zone.js", "zone.js/testing" ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [ "core/infrastructure/**/*.ts", "core/infrastructure/**/*.html" ],
+            "lintFilePatterns": ["core/infrastructure/**/*.ts", "core/infrastructure/**/*.html"],
             "eslintConfig": "core/infrastructure/eslint.config.js"
           }
         }
@@ -245,13 +245,13 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "libs/cqrs/tsconfig.spec.json",
-            "polyfills": [ "zone.js", "zone.js/testing" ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [ "libs/cqrs/**/*.ts", "libs/cqrs/**/*.html" ],
+            "lintFilePatterns": ["libs/cqrs/**/*.ts", "libs/cqrs/**/*.html"],
             "eslintConfig": "libs/cqrs/eslint.config.js"
           }
         }

@@ -1,14 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  effect,
-  EventEmitter,
-  inject,
-  Inject,
-  Input,
-  Output,
-  Signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, Inject, Input, Output, Signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DomainDecoators } from '#domain';
 import { ApplicationServices, ApplicationTokens } from '#application';
@@ -36,9 +26,7 @@ export class VerificationFormComponent {
     code: ['', [Validators.required]],
   });
 
-  constructor(
-    @Inject(ApplicationTokens.AuthorizationServiceToken) authorizationSerivce: ApplicationServices.IAuthorizeService
-  ) {
+  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationSerivce: ApplicationServices.IAuthorizeService) {
     this._authorizationSerivce = authorizationSerivce;
     this.isLoadingVerificationUser$ = authorizationSerivce.isLoadingVerificationUser$;
     this.isErrorVerificationUser$ = authorizationSerivce.isErrorVerificationUser$;

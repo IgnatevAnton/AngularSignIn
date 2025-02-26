@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  effect,
-  EventEmitter,
-  inject,
-  Inject,
-  Output,
-  Signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, Inject, Output, Signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DomainDecoators, DomainTokens, DomainInterface, RegistrationStatusErrors } from '#domain';
 import { ApplicationTokens, ApplicationServices } from '#application';
@@ -35,9 +26,7 @@ export class RegistrationFromComponent {
   @Output() private changeIsLoadingRegistrationUser = new EventEmitter<boolean>();
   @Output() private changeIsRegistrationForm = new EventEmitter<boolean>();
 
-  constructor(
-    @Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService
-  ) {
+  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService) {
     this._authorizationService = authorizationService;
     this.isLoadingRegistrationUser$ = this._authorizationService.isLoadingRegistration$;
 

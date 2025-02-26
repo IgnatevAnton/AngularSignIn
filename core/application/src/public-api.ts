@@ -8,3 +8,5 @@ export * as ApplicationServices from './lib/services';
 export * as ApplicationInterfaces from './lib/interface';
 export * as ApplicationTokens from './lib/tokens';
 export { ApplicationModule } from './lib/application.module';
+
+export * as ApplicationRequest from './lib/requests';

@@ -1,38 +1,27 @@
-import { Inject, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
+import { inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { interval, Observable, of, take } from 'rxjs';
 import { ISender } from '@cqrs';
 import { DomainDecoators, DomainTokens, DomainInterface, DomainServices, RegistrationStatusErrors } from '#domain';
-import { ApplicationServices } from '#application';
-import {
-  UserCheckQuery,
-  UserLoginCommand,
-  UserLogoutCommand,
-  UserRegistrationCommand,
-  UserVerificationCommand,
-} from '../repository';
+
 import { StatusRequest } from '../entities/StatusRequest';
-import { IPipelineBehevior, IUserResponse } from '../interface';
-import { InfrastructureContainerForDecorator } from '../containerForDecorator';
-import { FactoryUserResponseToken, PipelineUserTokens, SenderToken } from '../tokens';
+import { SenderToken } from '../tokens';
+import { IAuthorizeService } from './interface/IAuthorizeService';
+import { UserCheckQuery, UserLoginCommand, UserLogoutCommand, UserRegistrationCommand, UserVerificationCommand } from '../requests/user';
 
 @Injectable()
-export class AuthorizationService implements ApplicationServices.IAuthorizeService {
+export class AuthorizationService implements IAuthorizeService {
   private _title = '_AuthorizationService';
   private _timeoutMillisecondCleanError = 2000;
   private _timeoutSecondRepeatCode = 60;
 
-  private _logger?: DomainServices.ILoggerService | null = inject(DomainTokens.LoggerServiceDebugToken, {
-    optional: true,
-  });
+  private _logger?: DomainServices.ILoggerService | null = inject(DomainTokens.LoggerServiceDebugToken, { optional: true });
   private _sender: ISender = inject(SenderToken);
 
   private _user$: WritableSignal<DomainInterface.IUser | null> = signal<DomainInterface.IUser | null>(null);
   private _isTimeoutRepeatSendCode$: WritableSignal<number> = signal(0);
   private _userCheckStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
   private _userLoginStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
-  private _userRegistrationStatus = new StatusRequest<RegistrationStatusErrors[] | null>(
-    this._timeoutMillisecondCleanError
-  );
+  private _userRegistrationStatus = new StatusRequest<RegistrationStatusErrors[] | null>(this._timeoutMillisecondCleanError);
   private _userVerificationStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
   get user$(): Signal<DomainInterface.IUser | null> {
     return this._user$.asReadonly();
@@ -49,20 +38,6 @@ export class AuthorizationService implements ApplicationServices.IAuthorizeServi
   public isErrorRegistration$ = this._userRegistrationStatus.isErrorMessage;
   public isLoadingVerificationUser$ = this._userVerificationStatus.isLoading;
   public isErrorVerificationUser$ = this._userVerificationStatus.isError;
-
-  constructor(
-    @Inject(PipelineUserTokens) userPipline: IPipelineBehevior[],
-    @Inject(DomainTokens.FactoryUserToken) factoryUser: () => DomainInterface.IUser,
-    @Inject(FactoryUserResponseToken) factoryUserResponse: () => IUserResponse
-  ) {
-    InfrastructureContainerForDecorator.set(DomainTokens.FactoryUserToken, factoryUser);
-    InfrastructureContainerForDecorator.set(FactoryUserResponseToken, factoryUserResponse);
-    const conatianer = [];
-    for (const behevior of userPipline) {
-      conatianer.push(behevior);
-    }
-    InfrastructureContainerForDecorator.set(PipelineUserTokens, conatianer);
-  }
 
   @DomainDecoators.DebugMethod()
   check(): void {
@@ -84,8 +59,7 @@ export class AuthorizationService implements ApplicationServices.IAuthorizeServi
   @DomainDecoators.DebugMethod()
   login(username: string, password: string): void {
     this._userLoginStatus.set(true, false, null);
-    const response: Observable<DomainInterface.IUser | null> =
-      this._sender.send(new UserLoginCommand(username, password)) ?? of(null);
+    const response: Observable<DomainInterface.IUser | null> = this._sender.send(new UserLoginCommand(username, password)) ?? of(null);
     response.pipe(take(1)).subscribe({
       next: (user) => {
         this._logger?.info(this._title, 'login() ', 'next =>', user);
@@ -109,13 +83,8 @@ export class AuthorizationService implements ApplicationServices.IAuthorizeServi
   @DomainDecoators.DebugMethod()
   registration(data: DomainInterface.IUserRegistration): void {
     this._userRegistrationStatus.set(true, false, null);
-    const allErrors = [
-      RegistrationStatusErrors.EMAIL,
-      RegistrationStatusErrors.PASSWORD,
-      RegistrationStatusErrors.USER_NAME,
-    ];
-    const response: Observable<DomainInterface.IUserRegistrationStatus | null> =
-      this._sender.send(new UserRegistrationCommand(data.login, data.email, data.password)) ?? of(null);
+    const allErrors = [RegistrationStatusErrors.EMAIL, RegistrationStatusErrors.PASSWORD, RegistrationStatusErrors.USER_NAME];
+    const response: Observable<DomainInterface.IUserRegistrationStatus | null> = this._sender.send(new UserRegistrationCommand(data.login, data.email, data.password)) ?? of(null);
     response.pipe(take(1)).subscribe({
       next: (status: DomainInterface.IUserRegistrationStatus | null) => {
         this._logger?.info(this._title, 'registration() ', 'next =>', status);

@@ -15,9 +15,7 @@ export class AppComponent implements AfterContentInit {
   public readonly isCheckUser$: Signal<boolean>;
   private _authorizeService: ApplicationServices.IAuthorizeService;
 
-  constructor(
-    @Inject(ApplicationTokens.AuthorizationServiceToken) authorizeService: ApplicationServices.IAuthorizeService
-  ) {
+  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizeService: ApplicationServices.IAuthorizeService) {
     this._authorizeService = authorizeService;
     this.user$ = this._authorizeService.user$;
     this.isCheckUser$ = this._authorizeService.isCheck$;

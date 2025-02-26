@@ -1,9 +1,9 @@
 import { DomainDecoators } from '#domain';
+import { ApplicationRequest } from '#application';
 import { take } from 'rxjs';
-import { UserLogoutCommand } from '../Commands/UserLogout.command';
 import { UserHandler } from './User.handler';
 
-export class UserLogoutHandler extends UserHandler<UserLogoutCommand, void> {
+export class UserLogoutHandler extends UserHandler<ApplicationRequest.user.UserLogoutCommand, void> {
   @DomainDecoators.DebugMethod()
   handler(): void {
     this._client

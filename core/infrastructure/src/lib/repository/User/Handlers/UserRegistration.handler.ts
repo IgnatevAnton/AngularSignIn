@@ -1,14 +1,11 @@
 import { Observable } from 'rxjs';
-import { UserRegistrationCommand } from '../Commands/UserRegistration.command';
-import { UserHandler } from './User.handler';
+import { ApplicationRequest } from '#application';
 import { DomainDecoators, DomainInterface } from '#domain';
+import { UserHandler } from './User.handler';
 
-export class UserRegistrationHandler extends UserHandler<
-  UserRegistrationCommand,
-  Observable<DomainInterface.IUserRegistrationStatus | null>
-> {
+export class UserRegistrationHandler extends UserHandler<ApplicationRequest.user.UserRegistrationCommand, Observable<DomainInterface.IUserRegistrationStatus | null>> {
   @DomainDecoators.DebugMethod()
-  handler(request: UserRegistrationCommand): Observable<DomainInterface.IUserRegistrationStatus | null> {
+  handler(request: ApplicationRequest.user.UserRegistrationCommand): Observable<DomainInterface.IUserRegistrationStatus | null> {
     return this._client.post<DomainInterface.IUserRegistrationStatus>(
       this._url + 'api/user/login',
       { login: request.login, email: request.email, password: request.password },

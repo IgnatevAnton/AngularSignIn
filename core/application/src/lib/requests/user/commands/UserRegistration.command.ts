@@ -2,10 +2,7 @@ import { DomainInterface } from '#domain';
 import { ICommand } from '@cqrs';
 import { Observable } from 'rxjs';
 
-export class UserRegistrationCommand
-  extends ICommand<Observable<DomainInterface.IUserRegistrationStatus | null>>
-  implements DomainInterface.IUserRegistration
-{
+export class UserRegistrationCommand extends ICommand<Observable<DomainInterface.IUserRegistrationStatus | null>> implements DomainInterface.IUserRegistration {
   private _login: string;
   private _email: string;
   private _password: string;
