@@ -1,4 +1,4 @@
-import { DomainContainerForDecorator } from '../containerForDecorator';
+import { DomainContainerForDecorator } from '../entities/containerForDecorator';
 import { ILoggerService } from '../services/interface/ILoggerService';
 import { LoggerServiceDebugToken } from '../tokens';
 
