@@ -9,7 +9,7 @@ import { SettingSaveDataCommand, UpdateSettingFromLoadDataCommand } from '../req
 
 
 @Injectable()
-export class SettingInterfaceLocalStorageService implements ISettingInterfaceService {
+export class SettingInterfaceService implements ISettingInterfaceService {
   private _sender: ISender = inject(SenderToken);
   private _defaultSetting = new Map<BarNames, ISettingBar>();
   private _settings: WritableSignal<Map<BarNames, ISettingBar>> = signal(new Map());
