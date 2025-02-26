@@ -43,7 +43,7 @@ export class RegistrationFromComponent {
 
     effect(() => {
       const isLoad = this.isLoadingRegistrationUser$();
-      const isErrorRegistration = this._authorizationService.isErrorRegistration$();
+      const isErrorRegistration = this._authorizationService.isErrorRegistration$() ?? [];
 
       this.isErrorName = isErrorRegistration.includes(RegistrationStatusErrors.USER_NAME);
       this.isErrorEmail = isErrorRegistration.includes(RegistrationStatusErrors.EMAIL);

@@ -22,7 +22,8 @@
       "#domain": ["./dist/domain"],
       "#application": ["./dist/application"],
       "#infrastructure": ["./dist/infrastructure"],
-      "#presentation/*": ["src/app/*"]
+      "#presentation/*": ["src/app/*"],
+      "@cqrs": ["./dist/cqrs"]
     }
   },
   "angularCompilerOptions": {
