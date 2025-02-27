@@ -3,7 +3,7 @@ import { ApplicationRequest, BarNames } from '#application';
 import { ISettingBar } from 'dist/application/lib/interface';
 import { LocalStorageClientHandler } from '../../../entities/LocalStorageClientHandler';
 
-export class UpdateSettingFromLoadDataHandlers extends LocalStorageClientHandler<ApplicationRequest.setting.UpdateSettingFromLoadDataCommand, Map<BarNames, ISettingBar> | null> {
+export class UpdateSettingFromLoadDataHandler extends LocalStorageClientHandler<ApplicationRequest.setting.UpdateSettingFromLoadDataCommand, Map<BarNames, ISettingBar> | null> {
   @DomainDecoators.DebugMethod()
   override handler(request: ApplicationRequest.setting.UpdateSettingFromLoadDataCommand): Map<BarNames, ISettingBar> | null {
     try {

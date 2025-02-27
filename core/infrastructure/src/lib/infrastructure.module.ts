@@ -6,7 +6,7 @@ import { ApplicationTokens, ApplicationRequest } from '#application';
 import { UserResponse } from './entities/UserResponse';
 import { MappingUser, UserCheckHandler, UserLoginHandler, UserLogoutHandler, UserRegistrationHandler, UserVerifivationHandler, ValidateUser } from './repository/user';
 import { GetGroupFollowersHandler } from './repository/followers';
-import { SettingSaveDataHandler, UpdateSettingFromLoadDataHandlers } from './repository/settings';
+import { SettingSaveDataHandler, UpdateSettingFromLoadDataHandler } from './repository/settings';
 
 import { FactoryUserResponseToken, PipelineUserTokens, URL_REST_API } from './tokens';
 
@@ -28,7 +28,7 @@ import { InfrastructureContainerForDecorator } from './entities/ContainerForDeco
           [ApplicationRequest.user.UserVerificationCommand, new UserVerifivationHandler()],
           [ApplicationRequest.followers.GetGroupFollowersQuery, new GetGroupFollowersHandler()],
           [ApplicationRequest.setting.SettingSaveDataCommand, new SettingSaveDataHandler()],
-          [ApplicationRequest.setting.UpdateSettingFromLoadDataCommand, new UpdateSettingFromLoadDataHandlers()],
+          [ApplicationRequest.setting.UpdateSettingFromLoadDataCommand, new UpdateSettingFromLoadDataHandler()],
         ]),
     },
     { provide: PipelineUserTokens, useClass: ValidateUser, multi: true },
