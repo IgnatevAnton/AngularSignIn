@@ -22,8 +22,8 @@ export class SignInFormComponent {
 
   constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService) {
     this._authorizationService = authorizationService;
-    this.isLoadingUser = this._authorizationService.isLoadingLogin$;
-    this.isErrorUser = this._authorizationService.isErrorLogin$;
+    this.isLoadingUser = this._authorizationService.isLoadingLogin;
+    this.isErrorUser = this._authorizationService.isErrorLogin;
 
     effect(() => {
       const isLoadingUser = this.isLoadingUser();

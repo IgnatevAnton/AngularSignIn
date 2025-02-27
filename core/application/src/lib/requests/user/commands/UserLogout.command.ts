@@ -1,3 +1,3 @@
-import { ICommand } from '@cqrs';
+import { Command } from '@cqrs';
 
-export class UserLogoutCommand extends ICommand<void> {}
+export class UserLogoutCommand extends Command<void> {}

@@ -8,7 +8,6 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\AngularSignIn\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="core\application\src\lib\requests\followers\commands\" />
     <Folder Include="src\app\common\" />
   </ItemGroup>
 </Project>

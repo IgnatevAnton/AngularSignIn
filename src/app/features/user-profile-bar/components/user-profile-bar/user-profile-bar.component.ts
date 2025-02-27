@@ -14,7 +14,7 @@ export class UserProfileBarComponent {
   private _settingInterfaceService: ApplicationServices.ISettingInterfaceService;
 
   public name = BarNames.USER_PROFILE_BAR;
-  public user$: Signal<DomainInterface.IUser | null>;
+  public user: Signal<DomainInterface.IUser | null>;
 
   constructor(
     @Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService,
@@ -23,7 +23,7 @@ export class UserProfileBarComponent {
   ) {
     this._settingInterfaceService = settingInterface;
     this._authorizationService = authorizationService;
-    this.user$ = authorizationService.user$;
+    this.user = authorizationService.user;
   }
 
   @DomainDecoators.DebugMethod()

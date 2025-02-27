@@ -7,7 +7,6 @@ import { ISettingBar } from '../interface';
 import { DefaultSettingBarsToken, SenderToken } from '../tokens';
 import { SettingSaveDataCommand, UpdateSettingFromLoadDataCommand } from '../requests/setting';
 
-
 @Injectable()
 export class SettingInterfaceService implements ISettingInterfaceService {
   private _sender: ISender = inject(SenderToken);
@@ -22,9 +21,7 @@ export class SettingInterfaceService implements ISettingInterfaceService {
     return this._isLoadSetting.asReadonly();
   }
 
-  constructor(
-    @Inject(DefaultSettingBarsToken) defaultSettings: Map<BarNames, ISettingBar>
-  ) {
+  constructor(@Inject(DefaultSettingBarsToken) defaultSettings: Map<BarNames, ISettingBar>) {
     this._defaultSetting = defaultSettings;
     this._settings.set(new Map(this._defaultSetting));
   }
@@ -48,7 +45,9 @@ export class SettingInterfaceService implements ISettingInterfaceService {
     this.initial(key);
     const command = new UpdateSettingFromLoadDataCommand(`${this._key}_settingInterface`, this.settings());
     const updateSetting: Map<BarNames, ISettingBar> | null = this._sender.send(command) ?? null;
-    if (updateSetting !== null) { this._settings.set(updateSetting); }
+    if (updateSetting !== null) {
+      this._settings.set(updateSetting);
+    }
     this.saveSetting();
     this._isLoadSetting.set(true);
   }
@@ -57,5 +56,4 @@ export class SettingInterfaceService implements ISettingInterfaceService {
   private saveSetting(): boolean {
     return this._sender.send(new SettingSaveDataCommand(`${this._key}_settingInterface`, this.settings())) ?? false;
   }
-
 }

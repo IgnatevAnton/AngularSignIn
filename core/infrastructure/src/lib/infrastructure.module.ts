@@ -1,18 +1,17 @@
 import { Inject, NgModule } from '@angular/core';
-import { ICommandToken, IRequestHandlerToken, IQueryToken } from '@cqrs';
+import { ICommand, IQuery, IRequestHandlerToken } from '@cqrs';
 import { DomainInterface, DomainTokens } from '#domain';
 import { ApplicationTokens, ApplicationRequest } from '#application';
 
 import { UserResponse } from './entities/UserResponse';
 import { MappingUser, UserCheckHandler, UserLoginHandler, UserLogoutHandler, UserRegistrationHandler, UserVerifivationHandler, ValidateUser } from './repository/user';
-import { UserGroupFollowersHandler } from './repository/followers';
+import { GetGroupFollowersHandler } from './repository/followers';
 import { SettingSaveDataHandler, UpdateSettingFromLoadDataHadlers } from './repository/settings';
 
 import { FactoryUserResponseToken, PipelineUserTokens, URL_REST_API } from './tokens';
 
 import { IPipelineBehevior, IUserResponse } from './interface';
 import { InfrastructureContainerForDecorator } from './entities/ContainerForDecorator';
-
 
 @NgModule({
   providers: [
@@ -21,15 +20,15 @@ import { InfrastructureContainerForDecorator } from './entities/ContainerForDeco
     {
       provide: ApplicationTokens.HandlersToken,
       useFactory: () =>
-        new Map<IQueryToken | ICommandToken, IRequestHandlerToken>([
+        new Map<IQuery | ICommand, IRequestHandlerToken>([
           [ApplicationRequest.user.UserCheckQuery, new UserCheckHandler()],
           [ApplicationRequest.user.UserLoginCommand, new UserLoginHandler()],
           [ApplicationRequest.user.UserLogoutCommand, new UserLogoutHandler()],
           [ApplicationRequest.user.UserRegistrationCommand, new UserRegistrationHandler()],
           [ApplicationRequest.user.UserVerificationCommand, new UserVerifivationHandler()],
-          [ApplicationRequest.followers.UserGroupFollowersQuery, new UserGroupFollowersHandler()],
+          [ApplicationRequest.followers.GetGroupFollowersQuery, new GetGroupFollowersHandler()],
           [ApplicationRequest.setting.SettingSaveDataCommand, new SettingSaveDataHandler()],
-          [ApplicationRequest.setting.UpdateSettingFromLoadDataCommand, new UpdateSettingFromLoadDataHadlers()]
+          [ApplicationRequest.setting.UpdateSettingFromLoadDataCommand, new UpdateSettingFromLoadDataHadlers()],
         ]),
     },
     { provide: PipelineUserTokens, useClass: ValidateUser, multi: true },
@@ -42,7 +41,6 @@ export class InfrastructureModule {
     @Inject(DomainTokens.FactoryUserToken) factoryUser: () => DomainInterface.IUser,
     @Inject(FactoryUserResponseToken) factoryUserResponse: () => IUserResponse
   ) {
-    console.log('intital InfrastructureContainerForDecorator');
     InfrastructureContainerForDecorator.set(DomainTokens.FactoryUserToken, factoryUser);
     InfrastructureContainerForDecorator.set(FactoryUserResponseToken, factoryUserResponse);
     const conatianer = [];

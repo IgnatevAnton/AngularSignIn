@@ -1,62 +1,54 @@
-import { inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
-import { Observable, of, take } from 'rxjs';
-import { ISender } from '@cqrs';
-import { DomainDecoators, DomainInterface, DomainServices, DomainTokens } from '#domain';
-
-import { SenderToken } from '../tokens';
-import { StatusRequest } from '../entities/StatusRequest';
+import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { DomainDecoators, DomainInterface } from '#domain';
 import { IFollowersService } from './interface/IFollowersService';
-import { UserGroupFollowersQuery } from '../requests/followers';
+import { AddFollowersInGroupCommand, GetGroupFollowersQuery, RemoveFollowersFromGroupCommand } from '../requests/followers';
+import { BaseService, StatusRequest } from '../entities';
 
 @Injectable()
-export class FollowersService implements IFollowersService {
-  private _title = '_FollowersService';
-  private _timeoutMillisecondCleanError = 2000;
-  private _logger?: DomainServices.ILoggerService | null = inject(DomainTokens.LoggerServiceDebugToken, { optional: true });
-  private _sender: ISender = inject(SenderToken);
+export class FollowersService extends BaseService implements IFollowersService {
+  private _followers: WritableSignal<DomainInterface.IFollowerUser[]> = signal<DomainInterface.IFollowerUser[]>([]);
 
-  private _followers$: WritableSignal<DomainInterface.IFollowerUser[]> = signal<DomainInterface.IFollowerUser[]>([]);
-  get followers$(): Signal<DomainInterface.IFollowerUser[]> {
-    return this._followers$.asReadonly();
+  private _getStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
+  private _addStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
+  private _removeStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
+  get followers(): Signal<DomainInterface.IFollowerUser[]> {
+    return this._followers.asReadonly();
   }
-  private _followersListStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
 
-  public isLoadingFollowers$ = this._followersListStatus.isLoading;
-  public isErrorFollowers$ = this._followersListStatus.isError;
+  public readonly isLoadingGetFollowers = this._getStatus.isLoading;
+  public readonly isErrorGetFollowers = this._getStatus.isError;
+  public readonly isLoadingAddFollower = this._addStatus.isLoading;
+  public readonly isErrorAddFollower = this._addStatus.isError;
+  public readonly isLoadingRemoveFollower = this._removeStatus.isLoading;
+  public readonly isErrorRemoveFollower = this._removeStatus.isError;
+
+  constructor() {
+    super('_FollowersService');
+  }
 
   @DomainDecoators.DebugMethod()
   getFollowers(group: string, page: number): void {
-    this._followersListStatus.set(true, false, null);
-    const response: Observable<DomainInterface.IFollowerUser[] | null> = this._sender.send(new UserGroupFollowersQuery(group, page)) ?? of(null);
-    response.pipe(take(1)).subscribe({
-      next: (followers: DomainInterface.IFollowerUser[] | null) => {
-        this._logger?.info(this._title, 'check() ', 'next =>', followers);
-        if (followers === null) {
-          this._followersListStatus.set(false, true, null);
-          return;
-        }
-        this._followers$.set([...this._followers$(), ...followers]);
-        this._followersListStatus.set(false, false, null);
-      },
-      error: (error) => {
-        this._logger?.warning(this._title, error);
-        this._followersListStatus.set(false, true, null);
-      },
-    });
+    const request = new GetGroupFollowersQuery(group, page);
+    const callbackSuccess = (value: DomainInterface.IFollowerUser[]) => this._followers.set([...this._followers(), ...value]);
+    this.handlerResponseObservable('getFollowers', request, this._getStatus, null, callbackSuccess);
   }
 
   @DomainDecoators.DebugMethod()
   addFollowers(group: string, follower: DomainInterface.IFollowerUser): void {
-    throw new Error('Method not implemented.');
+    const request = new AddFollowersInGroupCommand(group, follower);
+    const callbackSuccess = () => this._followers.set([...this._followers(), follower]);
+    this.handlerResponseObservable('addFollowers', request, this._addStatus, false, callbackSuccess);
   }
 
   @DomainDecoators.DebugMethod()
   removeFollowers(group: string, follower: DomainInterface.IFollowerUser): void {
-    throw new Error('Method not implemented.');
+    const request = new RemoveFollowersFromGroupCommand(group, follower);
+    const callbackSuccess = () => this._followers.set(this._followers().filter((f) => f !== follower));
+    this.handlerResponseObservable('removeFollowers', request, this._removeStatus, false, callbackSuccess);
   }
 
   @DomainDecoators.DebugMethod()
   searchUser(userName: string): void {
-    throw new Error('Method not implemented.');
+    this._logger?.warning(this._title, 'Method not implemented searchUser');
   }
 }

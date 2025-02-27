@@ -28,11 +28,11 @@ export class RegistrationFromComponent {
 
   constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService) {
     this._authorizationService = authorizationService;
-    this.isLoadingRegistrationUser$ = this._authorizationService.isLoadingRegistration$;
+    this.isLoadingRegistrationUser$ = this._authorizationService.isLoadingRegistration;
 
     effect(() => {
       const isLoad = this.isLoadingRegistrationUser$();
-      const isErrorRegistration = this._authorizationService.isErrorRegistration$() ?? [];
+      const isErrorRegistration = this._authorizationService.isErrorRegistration() ?? [];
 
       this.isErrorName = isErrorRegistration.includes(RegistrationStatusErrors.USER_NAME);
       this.isErrorEmail = isErrorRegistration.includes(RegistrationStatusErrors.EMAIL);

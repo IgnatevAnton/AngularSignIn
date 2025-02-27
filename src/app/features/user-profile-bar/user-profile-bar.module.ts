@@ -4,7 +4,7 @@ import { UserIconComponent } from '#presentation/features/user-profile-bar/compo
 import { UserFollowersIconComponent } from '#presentation/features/user-profile-bar/components/user-followers-icon/user-followers-icon.component';
 import { UserSettingBarComponent } from '#presentation/features/user-profile-bar/components/user-setting-bar/user-setting-bar.component';
 import { PanelComponent } from '#presentation/shared/components/panel/panel.component';
-import { ApplicationTokens } from '#application';
+import { ApplicationInterfaces, ApplicationTokens } from '#application';
 import { DefaultUserProfileBar } from '#presentation/constants/DefaultSettingBar/DefaultUserProfileBar';
 
 @NgModule({
@@ -13,7 +13,7 @@ import { DefaultUserProfileBar } from '#presentation/constants/DefaultSettingBar
   exports: [UserProfileBarComponent],
 })
 export class UserProfileBarModule {
-  constructor(@Inject(ApplicationTokens.DefaultSettingBarsToken) defaultSettingBars: Map<string, any>) {
+  constructor(@Inject(ApplicationTokens.DefaultSettingBarsToken) defaultSettingBars: Map<string, ApplicationInterfaces.ISettingBar>) {
     defaultSettingBars.set(DefaultUserProfileBar.name, DefaultUserProfileBar);
   }
 }

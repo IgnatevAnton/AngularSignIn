@@ -1,13 +1,13 @@
 <div class="app">
-  @let user = user$();
-  @let isCheck = isCheckUser$();
-  @if (user !== null && isCheck === true && user?.isConfirm) {
+  @let usr = user();
+  @let isCheck = isCheckUser();
+  @if (usr !== null && isCheck === true && usr?.isConfirm) {
     <router-outlet />
-  } @else if (isCheck === false) {
+  } @else if (isCheckUser() === false) {
     <div class="app__loader">
       <app-loader-spinner></app-loader-spinner>
     </div>
   } @else {
-    <app-sign-in [isConfirm]="user?.isConfirm ?? null" [email]="user?.email ?? null"></app-sign-in>
+    <app-sign-in [isConfirm]="usr?.isConfirm ?? null" [email]="usr?.email ?? null"></app-sign-in>
   }
 </div>

@@ -1,10 +1,14 @@
-import { ICommand } from '@cqrs';
+import { Command } from '@cqrs';
 import { BarNames } from '../../../constant/BarNames';
 import { ISettingBar } from '../../../interface';
 
-export class UpdateSettingFromLoadDataCommand extends ICommand<Map<BarNames, ISettingBar> | null> {
-  get name() { return this._name; }
-  get currentSetting() { return this._currentSetting; }
+export class UpdateSettingFromLoadDataCommand extends Command<Map<BarNames, ISettingBar> | null> {
+  get name() {
+    return this._name;
+  }
+  get currentSetting() {
+    return this._currentSetting;
+  }
 
   constructor(
     private _name: string,
@@ -12,5 +16,4 @@ export class UpdateSettingFromLoadDataCommand extends ICommand<Map<BarNames, ISe
   ) {
     super();
   }
-
 }

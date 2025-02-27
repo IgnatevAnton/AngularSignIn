@@ -1,15 +1,12 @@
-import { ICommand } from '@cqrs';
+import { Command } from '@cqrs';
 import { Observable } from 'rxjs';
 
-export class UserVerificationCommand extends ICommand<Observable<boolean | null>> {
-  private _code: string;
-
+export class UserVerificationCommand extends Command<Observable<boolean | null>> {
   get code() {
     return this._code;
   }
 
-  constructor(code: string) {
+  constructor(private _code: string) {
     super();
-    this._code = code;
   }
 }

@@ -11,28 +11,25 @@ import { ApplicationServices, ApplicationTokens } from '#application';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VerificationFormComponent {
-  private readonly _authorizationSerivce: ApplicationServices.IAuthorizeService;
-  private readonly _formBuilder = inject(FormBuilder);
-
-  public readonly isLoadingVerificationUser$: Signal<boolean>;
-  public readonly isErrorVerificationUser$: Signal<boolean>;
-  public readonly isTimeoutRepeatSendCode$: Signal<number>;
-
   @Input() public email = '';
-
   @Output() public changeIsLoadingVerificationUser = new EventEmitter<boolean>();
 
+  private readonly _authorizationSerivce: ApplicationServices.IAuthorizeService;
+  private readonly _formBuilder = inject(FormBuilder);
+  public readonly isLoadingVerificationUser: Signal<boolean>;
+  public readonly isErrorVerificationUser: Signal<boolean>;
+  public readonly isTimeoutRepeatSendCode: Signal<number>;
   public verficationForm = this._formBuilder.group({
     code: ['', [Validators.required]],
   });
 
   constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationSerivce: ApplicationServices.IAuthorizeService) {
     this._authorizationSerivce = authorizationSerivce;
-    this.isLoadingVerificationUser$ = authorizationSerivce.isLoadingVerificationUser$;
-    this.isErrorVerificationUser$ = authorizationSerivce.isErrorVerificationUser$;
-    this.isTimeoutRepeatSendCode$ = authorizationSerivce.isTimeoutRepeatSendCode$;
+    this.isLoadingVerificationUser = authorizationSerivce.isLoadingVerificationUser;
+    this.isErrorVerificationUser = authorizationSerivce.isErrorVerificationUser;
+    this.isTimeoutRepeatSendCode = authorizationSerivce.isTimeoutRepeatSendCode;
     effect(() => {
-      this.changeIsLoadingVerificationUser.emit(this.isLoadingVerificationUser$());
+      this.changeIsLoadingVerificationUser.emit(this.isLoadingVerificationUser());
     });
   }
 
@@ -48,7 +45,7 @@ export class VerificationFormComponent {
 
   @DomainDecoators.DebugMethod()
   onSendCode(): void {
-    if (this.isTimeoutRepeatSendCode$() > 0) {
+    if (this.isTimeoutRepeatSendCode() > 0) {
       return;
     }
     this._authorizationSerivce.sendCode();

@@ -1,4 +1,4 @@
 import { DomainInterface } from '#domain';
-import { IQuery } from '@cqrs';
+import { Query } from '@cqrs';
 import { Observable } from 'rxjs';
-export class UserCheckQuery extends IQuery<Observable<DomainInterface.IUser | null>> {}
+export class UserCheckQuery extends Query<Observable<DomainInterface.IUser | null>> {}

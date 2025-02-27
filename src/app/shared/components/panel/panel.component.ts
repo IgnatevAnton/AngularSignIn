@@ -29,7 +29,7 @@ export class PanelComponent {
     private _cdr: ChangeDetectorRef
   ) {
     this._settingInterfaceService = settingInterface;
-    const keySetting = (authorizationService.user$()?.uid ?? '') + '_' + _NGX_ENV_.NG_APP_VERSION;
+    const keySetting = (authorizationService.user()?.uid ?? '') + '_' + _NGX_ENV_.NG_APP_VERSION;
     this.initializeSettingInterface(keySetting);
     effect(() => {
       this._setting = this._settingInterfaceService.settings().get(this.name);

@@ -1,11 +1,14 @@
-import { ICommand } from '@cqrs';
+import { Command } from '@cqrs';
 import { ISettingBar } from '../../../interface';
 import { BarNames } from '../../../constant/BarNames';
 
-export class SettingSaveDataCommand extends ICommand<boolean> {
-
-  get name() { return this._name; }
-  get setting() { return this._setting; }
+export class SettingSaveDataCommand extends Command<boolean> {
+  get name() {
+    return this._name;
+  }
+  get setting() {
+    return this._setting;
+  }
 
   constructor(
     private _name: string,
@@ -13,5 +16,4 @@ export class SettingSaveDataCommand extends ICommand<boolean> {
   ) {
     super();
   }
-
 }

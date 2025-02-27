@@ -8,13 +8,13 @@ export interface IAuthorizeService
     DomainInstruction.IRegistrationUser,
     DomainInstruction.IConfirmAccount,
     DomainInstruction.IRepeatSendCode {
-  readonly user$: Signal<DomainInterface.IUser | null>;
-  readonly isCheck$: Signal<boolean>;
-  readonly isLoadingLogin$: Signal<boolean>;
-  readonly isErrorLogin$: Signal<boolean>;
-  readonly isErrorRegistration$: Signal<RegistrationStatusErrors[] | null>;
-  readonly isLoadingRegistration$: Signal<boolean>;
-  readonly isLoadingVerificationUser$: Signal<boolean>;
-  readonly isErrorVerificationUser$: Signal<boolean>;
-  readonly isTimeoutRepeatSendCode$: Signal<number>;
+  readonly user: Signal<DomainInterface.IUser | null>;
+  readonly isCheck: Signal<boolean>;
+  readonly isLoadingLogin: Signal<boolean>;
+  readonly isErrorLogin: Signal<boolean>;
+  readonly isErrorRegistration: Signal<RegistrationStatusErrors[] | null>;
+  readonly isLoadingRegistration: Signal<boolean>;
+  readonly isLoadingVerificationUser: Signal<boolean>;
+  readonly isErrorVerificationUser: Signal<boolean>;
+  readonly isTimeoutRepeatSendCode: Signal<number>;
 }

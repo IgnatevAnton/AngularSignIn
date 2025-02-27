@@ -14,7 +14,7 @@ export class UserFollowersBarComponent {
   private _isInitialFollowersData = false;
   private _followersService: ApplicationServices.IFollowersService;
   private _userUID = '';
-  public followers$: Signal<DomainInterface.IFollowerUser[]>;
+  public followers: Signal<DomainInterface.IFollowerUser[]>;
 
   constructor(
     @Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService,
@@ -23,10 +23,10 @@ export class UserFollowersBarComponent {
     settingInterfaceService: ApplicationServices.ISettingInterfaceService
   ) {
     this._followersService = followersService;
-    this.followers$ = this._followersService.followers$;
+    this.followers = this._followersService.followers;
 
     effect(() => {
-      const uid = authorizationService.user$()?.uid;
+      const uid = authorizationService.user()?.uid;
       if (uid === undefined) {
         return;
       }

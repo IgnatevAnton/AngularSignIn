@@ -1,11 +1,8 @@
 import { DomainInterface } from '#domain';
-import { ICommand } from '@cqrs';
+import { Command } from '@cqrs';
 import { Observable } from 'rxjs';
 
-export class UserLoginCommand extends ICommand<Observable<DomainInterface.IUser | null>> {
-  private _username: string;
-  private _password: string;
-
+export class UserLoginCommand extends Command<Observable<DomainInterface.IUser | null>> {
   get username() {
     return this._username;
   }
@@ -13,9 +10,10 @@ export class UserLoginCommand extends ICommand<Observable<DomainInterface.IUser 
     return this._password;
   }
 
-  constructor(username: string, password: string) {
+  constructor(
+    private _username: string,
+    private _password: string
+  ) {
     super();
-    this._username = username;
-    this._password = password;
   }
 }

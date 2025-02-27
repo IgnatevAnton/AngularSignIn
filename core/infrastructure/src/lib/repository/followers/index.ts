@@ -1,1 +1,1 @@
-export { UserGroupFollowersHandler } from './handlers/UserGroupFollowers.handler';
+export { GetGroupFollowersHandler } from './handlers/GetGroupFollowers.handler';

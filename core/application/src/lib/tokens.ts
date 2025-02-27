@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { ICommandToken, IQueryToken, IRequestHandlerToken, ISender } from '@cqrs';
+import { ICommand, IQuery, IRequestHandlerToken, ISender } from '@cqrs';
 import { ISettingBar } from './interface';
 import { IAuthorizeService, IFollowersService, ISettingInterfaceService } from './services';
 
@@ -8,4 +8,4 @@ export const AuthorizationServiceToken = new InjectionToken<IAuthorizeService>('
 export const FollowersServiceToken = new InjectionToken<IFollowersService>('FollowersServiceToken');
 export const SettingInterfaceServiceToken = new InjectionToken<ISettingInterfaceService>('SettingInterfaceServiceToken');
 export const SenderToken = new InjectionToken<ISender>('SenderToken');
-export const HandlersToken = new InjectionToken<Map<IQueryToken | ICommandToken, IRequestHandlerToken>>('HandlersToken');
+export const HandlersToken = new InjectionToken<Map<IQuery | ICommand, IRequestHandlerToken>>('HandlersToken');

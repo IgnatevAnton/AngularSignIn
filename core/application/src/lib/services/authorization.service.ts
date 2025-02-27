@@ -1,144 +1,96 @@
-import { inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
-import { interval, Observable, of, take } from 'rxjs';
-import { ISender } from '@cqrs';
-import { DomainDecoators, DomainTokens, DomainInterface, DomainServices, RegistrationStatusErrors } from '#domain';
-
-import { StatusRequest } from '../entities/StatusRequest';
-import { SenderToken } from '../tokens';
+import { Injectable, Signal, signal, WritableSignal } from '@angular/core';
+import { interval, take } from 'rxjs';
+import { DomainDecoators, DomainInterface, RegistrationStatusErrors } from '#domain';
 import { IAuthorizeService } from './interface/IAuthorizeService';
 import { UserCheckQuery, UserLoginCommand, UserLogoutCommand, UserRegistrationCommand, UserVerificationCommand } from '../requests/user';
+import { BaseService, StatusRequest } from '../entities';
 
 @Injectable()
-export class AuthorizationService implements IAuthorizeService {
-  private _title = '_AuthorizationService';
-  private _timeoutMillisecondCleanError = 2000;
+export class AuthorizationService extends BaseService implements IAuthorizeService {
   private _timeoutSecondRepeatCode = 60;
-
-  private _logger?: DomainServices.ILoggerService | null = inject(DomainTokens.LoggerServiceDebugToken, { optional: true });
-  private _sender: ISender = inject(SenderToken);
-
-  private _user$: WritableSignal<DomainInterface.IUser | null> = signal<DomainInterface.IUser | null>(null);
-  private _isTimeoutRepeatSendCode$: WritableSignal<number> = signal(0);
+  private _user: WritableSignal<DomainInterface.IUser | null> = signal<DomainInterface.IUser | null>(null);
+  private _isTimeoutRepeatSendCode: WritableSignal<number> = signal(0);
   private _userCheckStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
   private _userLoginStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
   private _userRegistrationStatus = new StatusRequest<RegistrationStatusErrors[] | null>(this._timeoutMillisecondCleanError);
   private _userVerificationStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
-  get user$(): Signal<DomainInterface.IUser | null> {
-    return this._user$.asReadonly();
+  get user(): Signal<DomainInterface.IUser | null> {
+    return this._user.asReadonly();
   }
 
-  get isTimeoutRepeatSendCode$(): Signal<number> {
-    return this._isTimeoutRepeatSendCode$.asReadonly();
+  get isTimeoutRepeatSendCode(): Signal<number> {
+    return this._isTimeoutRepeatSendCode.asReadonly();
   }
 
-  public isCheck$ = this._userCheckStatus.isLoading;
-  public isLoadingLogin$ = this._userLoginStatus.isLoading;
-  public isErrorLogin$ = this._userLoginStatus.isError;
-  public isLoadingRegistration$ = this._userRegistrationStatus.isLoading;
-  public isErrorRegistration$ = this._userRegistrationStatus.isErrorMessage;
-  public isLoadingVerificationUser$ = this._userVerificationStatus.isLoading;
-  public isErrorVerificationUser$ = this._userVerificationStatus.isError;
+  public isCheck = this._userCheckStatus.isLoading;
+  public isLoadingLogin = this._userLoginStatus.isLoading;
+  public isErrorLogin = this._userLoginStatus.isError;
+  public isLoadingRegistration = this._userRegistrationStatus.isLoading;
+  public isErrorRegistration = this._userRegistrationStatus.isErrorMessage;
+  public isLoadingVerificationUser = this._userVerificationStatus.isLoading;
+  public isErrorVerificationUser = this._userVerificationStatus.isError;
+
+  constructor() {
+    super('_AuthorizationService');
+  }
 
   @DomainDecoators.DebugMethod()
   check(): void {
-    const response: Observable<DomainInterface.IUser | null> = this._sender.send(new UserCheckQuery()) ?? of(null);
-    response.pipe(take(1)).subscribe({
-      next: (user) => {
-        this._logger?.info(this._title, 'check() ', 'next =>', user);
-        this._user$.set(user);
-        this._userCheckStatus.set(true, false, null);
-      },
-      error: (error) => {
-        this._logger?.warning(this._title, error);
-        this._user$.set(null);
-        this._userCheckStatus.set(true, false, null);
-      },
-    });
+    const request = new UserCheckQuery();
+    const callbackSuccess = (value: DomainInterface.IUser) => {
+      this._user.set(value);
+      this._userCheckStatus.set(true, false, null);
+    };
+    const callbackError = () => {
+      this._user.set(null);
+      this._userCheckStatus.set(true, false, null);
+    };
+    this.handlerResponseObservable('check', request, undefined, undefined, callbackSuccess, callbackError);
   }
 
   @DomainDecoators.DebugMethod()
   login(username: string, password: string): void {
-    this._userLoginStatus.set(true, false, null);
-    const response: Observable<DomainInterface.IUser | null> = this._sender.send(new UserLoginCommand(username, password)) ?? of(null);
-    response.pipe(take(1)).subscribe({
-      next: (user) => {
-        this._logger?.info(this._title, 'login() ', 'next =>', user);
-        this._user$.set(user);
-        this._userLoginStatus.set(false, false, null);
-      },
-      error: (error) => {
-        this._logger?.warning(this._title, error);
-        this._user$.set(null);
-        this._userLoginStatus.set(false, true, null);
-      },
-    });
+    const request = new UserLoginCommand(username, password);
+    const callbackSuccess = (value: DomainInterface.IUser) => this._user.set(value);
+    const callbackError = () => this._user.set(null);
+    this.handlerResponseObservable('login', request, this._userLoginStatus, undefined, callbackSuccess, callbackError);
   }
 
   @DomainDecoators.DebugMethod()
   logout(): void {
-    this._user$.set(null);
-    this._sender.send(new UserLogoutCommand());
+    this._user.set(null);
+    this.handlerResponseObservable('logout', new UserLogoutCommand());
   }
 
   @DomainDecoators.DebugMethod()
   registration(data: DomainInterface.IUserRegistration): void {
-    this._userRegistrationStatus.set(true, false, null);
     const allErrors = [RegistrationStatusErrors.EMAIL, RegistrationStatusErrors.PASSWORD, RegistrationStatusErrors.USER_NAME];
-    const command = new UserRegistrationCommand(data.login, data.email, data.password);
-    const response: Observable<DomainInterface.IUserRegistrationStatus | null> = this._sender.send(command) ?? of(null);
-    response.pipe(take(1)).subscribe({
-      next: (status: DomainInterface.IUserRegistrationStatus | null) => {
-        this._logger?.info(this._title, 'registration() ', 'next =>', status);
-        if (status === null) {
-          this._userRegistrationStatus.set(false, true, allErrors);
-          return;
-        }
-        if (status.status) {
-          this._userRegistrationStatus.set(false, false, null);
-          this.login(data.login, data.password);
-        } else {
-          this._userRegistrationStatus.set(false, true, status.errorNameFields);
-        }
-      },
-      error: (error) => {
-        this._userRegistrationStatus.set(false, true, allErrors);
-        this._logger?.warning(this._title, error);
-      },
-    });
+    const request = new UserRegistrationCommand(data.login, data.email, data.password);
+    const callbackSuccess = (value: DomainInterface.IUserRegistrationStatus) => {
+      if (!value.status) {
+        this._userRegistrationStatus.set(false, true, value.errorNameFields);
+        return;
+      }
+      this._userRegistrationStatus.set(false, false, null);
+      this.login(data.login, data.password);
+    };
+    this.handlerResponseObservable('registration', request, this._userRegistrationStatus, null, callbackSuccess, undefined, allErrors);
   }
 
   @DomainDecoators.DebugMethod()
   confirm(code: string): void {
-    this._userVerificationStatus.set(true, false, null);
-    const response: Observable<boolean | null> = this._sender.send(new UserVerificationCommand(code)) ?? of(null);
-    response.pipe(take(1)).subscribe({
-      next: (status: boolean | null) => {
-        this._logger?.info(this._title, 'confirm() ', 'next =>', status);
-        if (status === null) {
-          this._userRegistrationStatus.set(false, true, null);
-          return;
-        }
-        if (status) {
-          this._userVerificationStatus.set(false, false, null);
-          this.check();
-        } else {
-          this._userVerificationStatus.set(false, true, null);
-        }
-      },
-      error: (error) => {
-        this._logger?.warning(this._title, error);
-        this._userVerificationStatus.set(false, true, null);
-      },
-    });
+    const request = new UserVerificationCommand(code);
+    const callbackSuccess = () => this.check();
+    this.handlerResponseObservable('confirm', request, this._userVerificationStatus, false, callbackSuccess);
   }
 
   @DomainDecoators.DebugMethod()
   sendCode(): void {
-    this._isTimeoutRepeatSendCode$.set(this._timeoutSecondRepeatCode);
+    this._isTimeoutRepeatSendCode.set(this._timeoutSecondRepeatCode);
     interval(1000)
       .pipe(take(this._timeoutSecondRepeatCode + 1))
       .subscribe((time) => {
-        this._isTimeoutRepeatSendCode$.set(this._timeoutSecondRepeatCode - time);
+        this._isTimeoutRepeatSendCode.set(this._timeoutSecondRepeatCode - time);
       });
   }
 }

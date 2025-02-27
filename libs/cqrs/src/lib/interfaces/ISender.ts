@@ -1,6 +1,6 @@
-import { ICommand } from './ICommand';
-import { IQuery } from './IQuery';
+import { Command } from '../entities/Command';
+import { Query } from '../entities/Query';
 
 export interface ISender {
-  send<TReq extends IQuery<TResp> | ICommand<TResp>, TResp>(request: TReq): TResp | undefined;
+  send<TReq extends Query<TResp> | Command<TResp>, TResp>(request: TReq): TResp | undefined;
 }
