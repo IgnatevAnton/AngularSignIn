@@ -30,12 +30,12 @@ export abstract class BaseService {
     if (response === undefined) {
       status?.set(false, true, null);
       this._logger?.warning(this._title, `not implemented ${requestName}`);
+
       return;
     }
     response.pipe(take(1)).subscribe({
       next: (value: TResp | null | TError) => {
         this._logger?.info(this._title, `${methodName}() `, 'next =>', value);
-        this._logger?.info(this._title, `${methodName}() `, incorrectDataValue, value, incorrectDataValue);
         if (incorrectDataValue === undefined || value !== incorrectDataValue) {
           status?.set(false, false, null);
           if (callbackSuccess) {
