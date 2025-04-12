@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, Inject, Output, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, Output, Signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { DomainDecoators, DomainTokens, DomainInterface, RegistrationStatusErrors } from '#domain';
-import { ApplicationTokens, ApplicationServices } from '#application';
+import { DomainDecoators, RegistrationStatusErrors } from '#domain';
+import { ApplicationTokens, ApplicationRequest } from '#application';
 import { matchValidator } from '../validators/matchValidator';
+import { injectStore, STORE_DISPATCHER_TOKEN } from '@cqrs';
 
 @Component({
   selector: 'app-registration-from',
@@ -13,11 +14,15 @@ import { matchValidator } from '../validators/matchValidator';
 })
 export class RegistrationFromComponent {
   private _title = '_RegistrationFromComponent';
-  private _authorizationService: ApplicationServices.IAuthorizeService;
-  private _formBuilder = inject(FormBuilder);
-  private _userRegistrationData = inject(DomainTokens.FactoryUserRegistrationToken);
-  public isLoadingRegistrationUser$: Signal<boolean>;
+
+  private readonly _dispathcer = inject(STORE_DISPATCHER_TOKEN);
+  private readonly _store = injectStore(ApplicationTokens.AUTHORIZATION_STORE);
+
+  private readonly _formBuilder = inject(FormBuilder);
+
   private _isExitRegistrationForm = false;
+
+  public readonly isLoadingRegistrationUser: Signal<boolean>;
 
   public isErrorName = false;
   public isErrorEmail = false;
@@ -26,13 +31,12 @@ export class RegistrationFromComponent {
   @Output() private changeIsLoadingRegistrationUser = new EventEmitter<boolean>();
   @Output() private changeIsRegistrationForm = new EventEmitter<boolean>();
 
-  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService) {
-    this._authorizationService = authorizationService;
-    this.isLoadingRegistrationUser$ = this._authorizationService.isLoadingRegistration;
+  constructor() {
+    this.isLoadingRegistrationUser = this._store.registrationStatus.status.isPending;
 
     effect(() => {
-      const isLoad = this.isLoadingRegistrationUser$();
-      const isErrorRegistration = this._authorizationService.isErrorRegistration() ?? [];
+      const isLoad = this.isLoadingRegistrationUser();
+      const isErrorRegistration = this._store.registrationStatus.value()?.errorNameFields ?? [];
 
       this.isErrorName = isErrorRegistration.includes(RegistrationStatusErrors.USER_NAME);
       this.isErrorEmail = isErrorRegistration.includes(RegistrationStatusErrors.EMAIL);
@@ -64,14 +68,8 @@ export class RegistrationFromComponent {
     const login = this.registrationForm.value.login;
     const email = this.registrationForm.value.email;
     const password = this.registrationForm.value.password;
-    if (!(login && email && password)) {
-      return;
-    }
+    if (!(login && email && password)) { return; }
     this.registrationForm.disable();
-    const data: DomainInterface.IUserRegistration = this._userRegistrationData();
-    data.login = login;
-    data.email = email;
-    data.password = password;
-    this._authorizationService.registration(data);
+    this._dispathcer.send(new ApplicationRequest.user.UserRegistrationAction(login, email, password));
   }
 }

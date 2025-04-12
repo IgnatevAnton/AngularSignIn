@@ -25,12 +25,11 @@ export abstract class BaseService {
     errorMessage?: any
   ): void {
     status?.set(true, false, null);
-    const requestName = Object.getPrototypeOf(request).constructor.name;
     const response: Observable<TResp | TError> | undefined = this._sender.send(request);
+    const requestName = Object.getPrototypeOf(request).constructor.name;
     if (response === undefined) {
       status?.set(false, true, null);
       this._logger?.warning(this._title, `not implemented ${requestName}`);
-
       return;
     }
     response.pipe(take(1)).subscribe({

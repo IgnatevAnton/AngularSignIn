@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, Inject, Input, Output, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, Input, Output, Signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { injectStore, ISender, STORE_DISPATCHER_TOKEN } from '@cqrs';
 import { DomainDecoators } from '#domain';
-import { ApplicationServices, ApplicationTokens } from '#application';
+import { ApplicationRequest, ApplicationTokens } from '#application';
 
 @Component({
   selector: 'app-verification-form',
@@ -14,7 +15,12 @@ export class VerificationFormComponent {
   @Input() public email = '';
   @Output() public changeIsLoadingVerificationUser = new EventEmitter<boolean>();
 
-  private readonly _authorizationSerivce: ApplicationServices.IAuthorizeService;
+  private readonly _dispather = inject(STORE_DISPATCHER_TOKEN);
+
+  private readonly _sender: ISender = inject(ApplicationTokens.SenderToken);
+  private readonly _authorizationStore = injectStore(ApplicationTokens.AUTHORIZATION_STORE);
+
+
   private readonly _formBuilder = inject(FormBuilder);
   public readonly isLoadingVerificationUser: Signal<boolean>;
   public readonly isErrorVerificationUser: Signal<boolean>;
@@ -23,11 +29,10 @@ export class VerificationFormComponent {
     code: ['', [Validators.required]],
   });
 
-  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationSerivce: ApplicationServices.IAuthorizeService) {
-    this._authorizationSerivce = authorizationSerivce;
-    this.isLoadingVerificationUser = authorizationSerivce.isLoadingVerificationUser;
-    this.isErrorVerificationUser = authorizationSerivce.isErrorVerificationUser;
-    this.isTimeoutRepeatSendCode = authorizationSerivce.isTimeoutRepeatSendCode;
+  constructor() {
+    this.isLoadingVerificationUser = this._authorizationStore.timeoutRepeatSendCode.status.isPending;
+    this.isErrorVerificationUser = this._authorizationStore.timeoutRepeatSendCode.status.isError;
+    this.isTimeoutRepeatSendCode = this._authorizationStore.timeoutRepeatSendCode.value;
     effect(() => {
       this.changeIsLoadingVerificationUser.emit(this.isLoadingVerificationUser());
     });
@@ -36,19 +41,15 @@ export class VerificationFormComponent {
   @DomainDecoators.DebugMethod()
   onSubmit(): void {
     const code = this.verficationForm.value.code;
-    if (!code) {
-      return;
-    }
-    this._authorizationSerivce.confirm(code);
+    if (!code) { return; }
+    this._dispather.send(new ApplicationRequest.user.UserVerificationAction(code));
     this.verficationForm.reset();
   }
 
   @DomainDecoators.DebugMethod()
   onSendCode(): void {
-    if (this.isTimeoutRepeatSendCode() > 0) {
-      return;
-    }
-    this._authorizationSerivce.sendCode();
+    if (this.isTimeoutRepeatSendCode() > 0) { return; }
+    this._dispather.send(new ApplicationRequest.user.UserVerificationSendCodeAction());
     this.verficationForm.reset();
   }
 }

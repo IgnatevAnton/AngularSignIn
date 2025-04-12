@@ -19,11 +19,11 @@
     "target": "ES2022",
     "module": "ES2022",
     "paths": {
-      "#domain": ["./dist/domain"],
-      "#application": ["./dist/application"],
-      "#infrastructure": ["./dist/infrastructure"],
-      "#presentation/*": ["src/app/*"],
-      "@cqrs": ["./dist/cqrs"]
+      "#domain": [ "./dist/domain" ],
+      "#application": [ "./dist/application" ],
+      "#infrastructure": [ "./dist/infrastructure" ],
+      "#presentation/*": [ "src/app/*" ],
+      "@cqrs": [ "./dist/cqrs" ]
     }
   },
   "angularCompilerOptions": {

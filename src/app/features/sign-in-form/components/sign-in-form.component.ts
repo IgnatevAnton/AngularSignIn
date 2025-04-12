@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component, effect, EventEmitter, inject, Injec
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { DomainDecoators } from '#domain';
-import { ApplicationTokens, ApplicationServices } from '#application';
+import { ApplicationTokens, ApplicationServices, ApplicationRequest } from '#application';
+import { injectStore, ISender, STORE_DISPATCHER_TOKEN } from '@cqrs';
 
 @Component({
   selector: 'app-sign-in-form',
@@ -13,17 +14,21 @@ import { ApplicationTokens, ApplicationServices } from '#application';
 })
 export class SignInFormComponent {
   private title = '_SignInFormComponent';
-  private _authorizationService: ApplicationServices.IAuthorizeService;
+
+  private readonly _dispatcher = inject(STORE_DISPATCHER_TOKEN);
+  private readonly _store = injectStore(ApplicationTokens.AUTHORIZATION_STORE);
+
   public isLoadingUser: Signal<boolean>;
   public isErrorUser: Signal<boolean>;
+
   @Output() private changeIsLoadingUser = new EventEmitter<boolean>();
 
   private formBuilder = inject(FormBuilder);
 
-  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService) {
-    this._authorizationService = authorizationService;
-    this.isLoadingUser = this._authorizationService.isLoadingLogin;
-    this.isErrorUser = this._authorizationService.isErrorLogin;
+  constructor() {
+
+    this.isLoadingUser = this._store.user.status.isPending;
+    this.isErrorUser = this._store.user.status.isError;
 
     effect(() => {
       const isLoadingUser = this.isLoadingUser();
@@ -47,6 +52,6 @@ export class SignInFormComponent {
       return;
     }
     this.authorizationForm.disable();
-    this._authorizationService.login(login, password);
+    this._dispatcher.send(new ApplicationRequest.user.UserLoginAction(login, password));
   }
 }

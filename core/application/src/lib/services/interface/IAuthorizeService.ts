@@ -1,13 +1,7 @@
 import { Signal } from '@angular/core';
-import { DomainInstruction, DomainInterface, RegistrationStatusErrors } from '#domain';
+import { DomainInterface, RegistrationStatusErrors } from '#domain';
 
-export interface IAuthorizeService
-  extends DomainInstruction.ICheckUser,
-    DomainInstruction.ILogin,
-    DomainInstruction.ILogout,
-    DomainInstruction.IRegistrationUser,
-    DomainInstruction.IConfirmAccount,
-    DomainInstruction.IRepeatSendCode {
+export interface IAuthorizeService {
   readonly user: Signal<DomainInterface.IUser | null>;
   readonly isCheck: Signal<boolean>;
   readonly isLoadingLogin: Signal<boolean>;

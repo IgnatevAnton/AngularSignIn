@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, Signal } from '@angular/core';
 import { DomainInterface } from '#domain';
-import { ApplicationTokens, ApplicationServices } from '#application';
+import { ApplicationTokens, ApplicationServices, ApplicationRequest } from '#application';
+import { injectStore, ISender, STORE_DISPATCHER_TOKEN } from '@cqrs';
 
 @Component({
   selector: 'app-root',
@@ -10,17 +11,21 @@ import { ApplicationTokens, ApplicationServices } from '#application';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  private _authorizeService: ApplicationServices.IAuthorizeService;
+
   public readonly title = '_AppComponent';
+
+  private readonly _dispatcher = inject(STORE_DISPATCHER_TOKEN);
+  private readonly _store = injectStore(ApplicationTokens.AUTHORIZATION_STORE);
+
   public readonly user: Signal<DomainInterface.IUser | null>;
   public readonly isCheckUser: Signal<boolean>;
 
-  constructor(@Inject(ApplicationTokens.AuthorizationServiceToken) authorizeService: ApplicationServices.IAuthorizeService) {
-    this._authorizeService = authorizeService;
-    this.user = this._authorizeService.user;
-    this.isCheckUser = this._authorizeService.isCheck;
+  constructor() {
+    this.user = this._store.user.value;
+    this.isCheckUser = this._store.isCheckUser.value;
   }
+
   ngOnInit() {
-    this._authorizeService?.check();
+    this._dispatcher.send(new ApplicationRequest.user.UserCheckAction());
   }
 }

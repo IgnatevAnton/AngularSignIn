@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, Inject, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { DomainDecoators, DomainInterface } from '#domain';
-import { ApplicationServices, ApplicationTokens, BarNames } from '#application';
+import { ApplicationRequest, ApplicationServices, ApplicationTokens, BarNames } from '#application';
+import { STORE_DISPATCHER_TOKEN } from '@cqrs';
+import { injectStore } from 'libs/cqrs/src/public-api';
 
 @Component({
   selector: 'app-user-profile-bar',
@@ -10,54 +12,32 @@ import { ApplicationServices, ApplicationTokens, BarNames } from '#application';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserProfileBarComponent {
-  private _authorizationService: ApplicationServices.IAuthorizeService;
-  private _settingInterfaceService: ApplicationServices.ISettingInterfaceService;
+
+  private readonly _dispatcher = inject(STORE_DISPATCHER_TOKEN);
+  private readonly _authorizationStore = injectStore(ApplicationTokens.AUTHORIZATION_STORE);
+
+  private readonly _settingInterfaceService: ApplicationServices.ISettingInterfaceService = inject(ApplicationTokens.SettingInterfaceServiceToken);
 
   public name = BarNames.USER_PROFILE_BAR;
-  public user: Signal<DomainInterface.IUser | null>;
-
-  constructor(
-    @Inject(ApplicationTokens.AuthorizationServiceToken) authorizationService: ApplicationServices.IAuthorizeService,
-    @Inject(ApplicationTokens.SettingInterfaceServiceToken)
-    settingInterface: ApplicationServices.ISettingInterfaceService
-  ) {
-    this._settingInterfaceService = settingInterface;
-    this._authorizationService = authorizationService;
-    this.user = authorizationService.user;
-  }
+  public user: Signal<DomainInterface.IUser | null> = this._authorizationStore.user.value;
 
   @DomainDecoators.DebugMethod()
-  logout() {
-    this._authorizationService.logout();
-  }
+  logout() { this._dispatcher.send(new ApplicationRequest.user.UserLogoutAction()); }
 
   @DomainDecoators.DebugMethod()
-  openUserProfile() {
-    const userProfile = this._settingInterfaceService.settings().get(BarNames.USER_PROFILE);
-    if (userProfile === undefined) {
-      return;
-    }
-    userProfile.isVisible = !userProfile.isVisible;
-    this._settingInterfaceService.setSettingBar(BarNames.USER_PROFILE, userProfile);
-  }
+  openUserProfile() { this.openBar(BarNames.USER_PROFILE); }
 
   @DomainDecoators.DebugMethod()
-  openFollowers() {
-    const followers = this._settingInterfaceService.settings().get(BarNames.FOLLOWERS_BAR);
-    if (followers === undefined) {
-      return;
-    }
-    followers.isVisible = !followers.isVisible;
-    this._settingInterfaceService.setSettingBar(BarNames.FOLLOWERS_BAR, followers);
-  }
+  openFollowers() { this.openBar(BarNames.FOLLOWERS_BAR); }
 
   @DomainDecoators.DebugMethod()
-  openSettingBars() {
-    const settingBars = this._settingInterfaceService.settings().get(BarNames.SETTING_LIST_BARS);
-    if (settingBars === undefined) {
-      return;
-    }
-    settingBars.isVisible = !settingBars.isVisible;
-    this._settingInterfaceService.setSettingBar(BarNames.SETTING_LIST_BARS, settingBars);
+  openSettingBars() { this.openBar(BarNames.SETTING_LIST_BARS); }
+
+  private openBar(name: BarNames) {
+    const setting = this._settingInterfaceService.settings().get(name);
+    if (setting === undefined) { return; }
+    setting.isVisible = !setting.isVisible;
+    this._settingInterfaceService.setSettingBar(name, setting);
   }
+
 }

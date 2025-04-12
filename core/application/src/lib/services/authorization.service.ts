@@ -2,14 +2,21 @@ import { Injectable, Signal, signal, WritableSignal } from '@angular/core';
 import { interval, take } from 'rxjs';
 import { DomainDecoators, DomainInterface, RegistrationStatusErrors } from '#domain';
 import { IAuthorizeService } from './interface/IAuthorizeService';
-import { UserCheckQuery, UserLoginCommand, UserLogoutCommand, UserRegistrationCommand, UserVerificationCommand } from '../requests/user';
+import {
+  UserCheckQuery,
+  UserLoginCommand,
+  UserLogoutCommand,
+  UserRegistrationCommand,
+  UserVerificationCommand
+} from '../requests/user';
 import { BaseService, StatusRequest } from '../entities';
 
 @Injectable()
 export class AuthorizationService extends BaseService implements IAuthorizeService {
+
   private _timeoutSecondRepeatCode = 60;
+  private _numberTimeoutRepeatSendCode: WritableSignal<number> = signal(0);
   private _user: WritableSignal<DomainInterface.IUser | null> = signal<DomainInterface.IUser | null>(null);
-  private _isTimeoutRepeatSendCode: WritableSignal<number> = signal(0);
   private _userCheckStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
   private _userLoginStatus = new StatusRequest<null>(this._timeoutMillisecondCleanError);
   private _userRegistrationStatus = new StatusRequest<RegistrationStatusErrors[] | null>(this._timeoutMillisecondCleanError);
@@ -19,7 +26,7 @@ export class AuthorizationService extends BaseService implements IAuthorizeServi
   }
 
   get isTimeoutRepeatSendCode(): Signal<number> {
-    return this._isTimeoutRepeatSendCode.asReadonly();
+    return this._numberTimeoutRepeatSendCode.asReadonly();
   }
 
   public isCheck = this._userCheckStatus.isLoading;
@@ -86,11 +93,11 @@ export class AuthorizationService extends BaseService implements IAuthorizeServi
 
   @DomainDecoators.DebugMethod()
   sendCode(): void {
-    this._isTimeoutRepeatSendCode.set(this._timeoutSecondRepeatCode);
+    this._numberTimeoutRepeatSendCode.set(this._timeoutSecondRepeatCode);
     interval(1000)
       .pipe(take(this._timeoutSecondRepeatCode + 1))
       .subscribe((time) => {
-        this._isTimeoutRepeatSendCode.set(this._timeoutSecondRepeatCode - time);
+        this._numberTimeoutRepeatSendCode.set(this._timeoutSecondRepeatCode - time);
       });
   }
 }

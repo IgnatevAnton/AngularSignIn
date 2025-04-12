@@ -25,7 +25,7 @@ export class LocalLoggerService implements ILoggerService {
   time(name: string, time: number): void {
     const logMessage = ` [${name}] time: ${time.toFixed(2)} ms `;
     if (time > this._timeThreshold) {
-      console.warn(`%c${logMessage}`);
+      console.warn(`${logMessage}`);
     } else {
       console.log(`%c${logMessage}`, 'color:white; background-color:#9bb894; ');
     }

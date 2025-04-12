@@ -13,7 +13,9 @@ import { DefaultUserProfileBar } from '#presentation/constants/DefaultSettingBar
   exports: [UserProfileBarComponent],
 })
 export class UserProfileBarModule {
-  constructor(@Inject(ApplicationTokens.DefaultSettingBarsToken) defaultSettingBars: Map<string, ApplicationInterfaces.ISettingBar>) {
+  constructor(
+    @Inject(ApplicationTokens.DefaultSettingBarsToken) defaultSettingBars: Map<string, ApplicationInterfaces.ISettingBar>
+  ) {
     defaultSettingBars.set(DefaultUserProfileBar.name, DefaultUserProfileBar);
   }
 }
