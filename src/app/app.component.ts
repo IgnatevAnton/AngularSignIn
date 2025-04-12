@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, Signal } from '@angular/core';
+import { injectStore, STORE_DISPATCHER_TOKEN } from '@cqrs';
 import { DomainInterface } from '#domain';
-import { ApplicationTokens, ApplicationServices, ApplicationRequest } from '#application';
-import { injectStore, ISender, STORE_DISPATCHER_TOKEN } from '@cqrs';
+import { ApplicationTokens, ApplicationRequest } from '#application';
 
 @Component({
   selector: 'app-root',

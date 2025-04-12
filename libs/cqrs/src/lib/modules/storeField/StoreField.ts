@@ -1,7 +1,6 @@
 import { Signal, signal, WritableSignal } from '@angular/core';
 import { StoreFieldStatus } from '../storeFieldStatus/StoreFieldStatus';
 import { IStoreField } from './intefaces/IStoreField';
-import { IStoreSource } from '../store/interfaces/IStoreSource';
 import { IStoreSetData } from '../store/interfaces/IStoreSetData';
 
 export class StoreField<T> implements IStoreField<T> {
@@ -20,7 +19,24 @@ export class StoreField<T> implements IStoreField<T> {
   get status(): StoreFieldStatus { return this._status; }
 
   set(data: IStoreSetData<T>) {
-    this._value.set({ ...this._value(), ...data });
+    const type = typeof data;
+    switch (type) {
+      case 'object':
+        if (data === null) {
+          this._value.set(data as T);
+          return;
+        }
+        if (Array.isArray(data)) {
+          this._value.set(data as T);
+          return;
+        }
+        this._value.set({ ...this._value(), ...data });
+        return;
+      case 'function':
+        return;
+      default:
+        this._value.set(data as T);
+    }
   };
 
 }
