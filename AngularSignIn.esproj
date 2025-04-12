@@ -10,5 +10,6 @@
   <ItemGroup>
     <Folder Include="libs\cqrs\src\lib\constants\" />
     <Folder Include="src\app\common\" />
+    <Folder Include="src\app\services\" />
   </ItemGroup>
 </Project>

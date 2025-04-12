@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 
 import { AUTHORIZATION_SERVICE_STORE_TOKEN, AuthorizationServiceToken, DefaultSettingBarsToken, FollowersServiceToken, SenderToken, SettingInterfaceServiceToken } from './tokens';
 import { ISettingBar } from './interface';
@@ -25,7 +24,6 @@ import { AuthorizationStoreModule } from './stores/authorization/authorization-s
 
   ],
   imports: [
-    HttpClientModule,
     AuthorizationStoreModule
   ],
 })

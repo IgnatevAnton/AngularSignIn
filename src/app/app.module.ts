@@ -11,6 +11,9 @@ import { SignInModule } from '#presentation/pages/sign-in/sign-in.module';
 import { LoaderSpinnerComponent } from '#presentation/shared/components/loaders/loader-spinner/loader-spinner.component';
 import { MainModule } from '#presentation/pages/main/main.module';
 import { WebWorkerRegistrationModule } from './workers/web-worker-registration.module';
+import { provideTransloco } from '@jsverse/transloco';
+import { TranslocoHttpLoader } from './services/transloco-http-loader.service';
+import { provideHttpClient } from '@angular/common/http';
 
 
 @NgModule({
@@ -24,7 +27,19 @@ import { WebWorkerRegistrationModule } from './workers/web-worker-registration.m
     InfrastructureModule,
     SignInModule,
     MainModule,
-    LoaderSpinnerComponent
+    LoaderSpinnerComponent,
+  ],
+  providers: [
+    provideHttpClient(),
+    provideTransloco({
+      config: {
+        availableLangs: ['en', 'rus'],
+        defaultLang: 'rus',
+        reRenderOnLangChange: true,
+        prodMode: !isDevMode(),
+      },
+      loader: TranslocoHttpLoader,
+    })
   ],
   bootstrap: [AppComponent],
 })

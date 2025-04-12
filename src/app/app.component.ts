@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, Signal } from '@angular/core';
 import { injectStore, STORE_DISPATCHER_TOKEN } from '@cqrs';
 import { DomainInterface } from '#domain';
 import { ApplicationTokens, ApplicationRequest } from '#application';
