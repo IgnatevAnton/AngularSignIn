@@ -20,7 +20,9 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
-
+.esproj
+.espproj.user
+.sln
 
 # Visual Studio Code
 .obj/*
@@ -47,6 +49,3 @@ testem.log
 *.key
 .DS_Store
 Thumbs.db
-*.esproj
-*.espproj.user
-*.sln
