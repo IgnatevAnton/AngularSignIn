@@ -49,5 +49,3 @@ testem.log
 *.key
 .DS_Store
 Thumbs.db
-*.cnf
-CHANGELOG.md
